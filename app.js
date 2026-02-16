@@ -1,3 +1,22 @@
+const modal = document.getElementById("modal");
+const openBtn = document.getElementById("openModalBtn");
+const closeBtn = document.getElementById("closeModalBtn");
+
+openBtn.addEventListener("click", () => {
+    modal.style.display = "block";
+});
+
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// Close if user clicks outside modal content
+window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
 // Load from localStorage or create default
 let players = JSON.parse(localStorage.getItem("players")) || ["Dan", "Alex", "Jordan"];
 localStorage.setItem("players", JSON.stringify(players));

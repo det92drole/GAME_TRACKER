@@ -3,33 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Local JSON Player Tracker</title>
+    <style>
+        .modal {
+            display: none; /* hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5); /* dark overlay */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<h1>Player Tracker</h1>
 
-<!-- File input to load JSON -->
-<input type="file" id="jsonFile" accept=".json">
-<button id="loadBtn">Load JSON</button>
+<!-- Trigger button -->
+<button id="openModalBtn">MENU</button>
 
-<hr>
+<!-- Modal container -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span id="closeModalBtn" class="close">&times;</span>
 
-<!-- Dropdown populated from localStorage -->
-<select id="playerSelect">
-    <option value="">Select a player</option>
-</select>
+    <h2>Player Tracker</h2>
 
-<!-- Add new player
-<input type="text" id="newPlayer" placeholder="Add new player">
-<button id="addPlayerBtn">Add Player</button> -->
+    <!-- File input to load JSON -->
+    <input type="file" id="jsonFile" accept=".json">
+    <button id="loadBtn">Load JSON</button>
+
+    <hr>
+
+    <!-- Dropdown populated from localStorage -->
+    <select id="playerSelect">
+        <option value="">Select a player</option>
+    </select>
+
+    <!-- Add new player -->
+    <input type="text" id="newPlayer" placeholder="Add new player">
+    <button id="addPlayerBtn">Add Player</button>
+  </div>
+</div>
 
 <script src="app.js"></script>
+
 <script>
-
-
-
-
-
-
 // Add new player
 // document.getElementById("addPlayerBtn").addEventListener("click", () => {
 //     const newPlayer = document.getElementById("newPlayer").value.trim();
