@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Local JSON Player Tracker</title>
+</head>
+<body>
+<h1>Player Tracker</h1>
+
+<!-- File input to load JSON -->
+<input type="file" id="jsonFile" accept=".json">
+<button id="loadBtn">Load JSON</button>
+
+<hr>
+
+<!-- Dropdown populated from localStorage -->
+<select id="playerSelect">
+    <option value="">Select a player</option>
+</select>
+
+<!-- Add new player
+<input type="text" id="newPlayer" placeholder="Add new player">
+<button id="addPlayerBtn">Add Player</button> -->
+
+<script src="app.js"></script>
+<script>
+
+
+
+
+
+
+// Add new player
+// document.getElementById("addPlayerBtn").addEventListener("click", () => {
+//     const newPlayer = document.getElementById("newPlayer").value.trim();
+//     if (!newPlayer) return;
+
+//     if (!players.includes(newPlayer)) {
+//         players.push(newPlayer);
+//         localStorage.setItem("players", JSON.stringify(players));
+//         populateDropdown();
+//     }
+//     document.getElementById("newPlayer").value = "";
+// });
+</script>
+
+</body>
+</html>
