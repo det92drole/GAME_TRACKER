@@ -1,3 +1,5 @@
+
+//MENU BUTTON==========
 const modal = document.getElementById("modal");
 const openBtn = document.getElementById("openModalBtn");
 const closeBtn = document.getElementById("closeModalBtn");
@@ -17,86 +19,36 @@ window.addEventListener("click", (event) => {
     }
 });
 
+
+//HOW MANY PLAYERS?
+document.getElementById("numPlayer2").addEventListener("click", ()=>{
+    renderPlayers(2);
+})
+document.getElementById("numPlayer3").addEventListener("click", ()=>{
+    renderPlayers(3);
+})
+document.getElementById("numPlayer4").addEventListener("click", ()=>{
+    renderPlayers(4);
+})
+
+//MENU BUTTON==========
+
 // Load from localStorage or create default
 let players = {};
 localStorage.setItem("players", JSON.stringify(players));
 
-// Function to populate dropdown
-// function populateDropdown() {
-//     const select = document.getElementById("playerSelect");
-//     select.innerHTML = "";
-
-//     const placeholder = document.createElement("option");
-//     placeholder.textContent = "Select a player";
-//     placeholder.value = "";
-//     placeholder.disabled = true;
-//     placeholder.selected = true;
-//     select.appendChild(placeholder);
-
-//     players.forEach(player => {
-//         const option = document.createElement("option");
-//         option.value = player;
-//         option.textContent = player;
-//         select.appendChild(option);
-//     });
-// }
-
-// // Populate on page load
-// populateDropdown();
-
-// Load JSON file into localStorage
-document.getElementById("loadBtn").addEventListener("click", () => {
-    const fileInput = document.getElementById("jsonFile");
-    const file = fileInput.files[0];
-
-    if (!file) {
-        alert("Please select a JSON file!");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        try {
-            const jsonData = JSON.parse(event.target.result);
-            if (!Array.isArray(jsonData)) throw "JSON must be an array of player names";
-
-            players=jsonData.map(name=> ({
-                name:name
-            }));
-            //players = jsonData;
-            localStorage.setItem("players", JSON.stringify(players));
-            //populateDropdown();
-            alert("JSON loaded successfully!");
-            
-            startGame();
-        } catch (err) {
-            alert("Invalid JSON file!");
-            console.error(err);
-        }
-    };
-    reader.readAsText(file);
-});
-
-// let players = [
-//     { name: "Player 1", life: 20 },
-//     { name: "Player 2", life: 20 },
-//     { name: "Player 3", life: 20 }
-
-//   // Add up to 4 players here
-// ];
-
 function setLifeTotal(){
     players.forEach((player)=>{
         player.life=20;
-        console.log(player.name);
+        //console.log(player.name);
     })
 }
 
-function renderPlayers() {
+function renderPlayers(intVal) {
   const container = document.getElementById("lifeContainer");
 
   // Adjust grid layout based on player count
-  if (players.length <= 2) {
+  if (intVal <= 2) {
     container.style.gridTemplateColumns = "1fr";
     container.style.gridTemplateRows = "1fr 1fr";
   } else {
@@ -106,30 +58,32 @@ function renderPlayers() {
 
   container.innerHTML = "";
 
-  players.forEach((player, index) => {
+  for(i=0;i<intVal;i++){
     const playerDiv = document.createElement("div");
     playerDiv.className = "player";
 
     playerDiv.innerHTML = `
-      <div class="zone plus" data-index="${index}" data-change="1">+</div>
-      <div class="life">${player.name} ${player.life}</div>
-      <div class="zone minus" data-index="${index}" data-change="-1">-</div>
+      <div class="zone plus" data-index="${i}" data-change="1">+</div>
+      <div class="life">selectplayer lifeTotal</div>
+      <div class="zone minus" data-index="${i}" data-change="-1">-</div>
     `;
 
-    container.appendChild(playerDiv);
-  });
+    container.appendChild(playerDiv); 
+  }
 }
 
-// Single event listener (clean + scalable)
+// Single event listener (clean + scalable) for life points
 document.getElementById("lifeContainer").addEventListener("click", (e) => {
   if (e.target.classList.contains("zone")) {
     const index = e.target.dataset.index;
     const change = Number(e.target.dataset.change);
-
+console.log("lifechange");
     players[index].life += change;
     renderPlayers();
   }
 });
+
+
 
 function startGame(){
     setLifeTotal();

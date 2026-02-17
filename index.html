@@ -31,7 +31,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            
         }
 
         #openModalBtn {
@@ -42,6 +42,7 @@
             font-size: 20px;
             font-weight: bold;
             cursor: pointer;
+            z-index: 1000;
         }
 
         .close {
@@ -93,6 +94,20 @@
             font-size: 5rem;
             padding: 20px 0;
         }
+
+        .button-row {
+            display: flex;
+            justify-content: center;   /* centers row */
+            gap: 20px;                 /* space between buttons */
+            margin-top: 50px;
+        }
+
+        .square-btn {
+            width: 100px;
+            height: 100px;             /* makes them square */
+            font-size: 24px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -107,22 +122,18 @@
   <div class="modal-content">
     <span id="closeModalBtn" class="close">&times;</span>
 
-    <h2>Player Tracker</h2>
+    <h2>MENU</h2>
 
-    <!-- File input to load JSON -->
-    <input type="file" id="jsonFile" accept=".json">
-    <button id="loadBtn">Load JSON</button>
-
-    <hr>
-
-    <!-- Dropdown populated from localStorage -->
-    <select id="playerSelect">
-        <option value="">Select a player</option>
-    </select>
-
-    <!-- Add new player -->
-    <input type="text" id="newPlayer" placeholder="Add new player">
-    <button id="addPlayerBtn">Add Player</button>
+    <!-- DETERMINE PLAYER COUNT -->
+    <h3>HOW MANY PLAYERS?</h3>
+    <div class="button-row">
+    <button id="numPlayer2" class="square-btn">2</button>
+    <button id="numPlayer3" class="square-btn">3</button>
+    <button id="numPlayer4" class="square-btn">4</button>
+    </div>
+    
+    
+    
   </div>
 </div>
 
@@ -143,6 +154,21 @@
 //     }
 //     document.getElementById("newPlayer").value = "";
 // });
+
+// <!-- File input to load JSON -->
+//     <input type="file" id="jsonFile" accept=".json">
+//     <button id="loadBtn">Load JSON</button>
+
+//     <hr>
+
+//     <!-- Dropdown populated from localStorage -->
+//     <select id="playerSelect">
+//         <option value="">Select a player</option>
+//     </select>
+
+//     <!-- Add new player -->
+//     <input type="text" id="newPlayer" placeholder="Add new player">
+//     <button id="addPlayerBtn">Add Player</button>
 </script>
 
 </body>
