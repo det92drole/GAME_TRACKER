@@ -25,6 +25,25 @@
             text-align: center;
         }
 
+        .menu-container {
+            position: fixed;
+            inset: 0;               /* fills entire screen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #openModalBtn {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;       /* makes it a circle */
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         .close {
             float: right;
             font-size: 24px;
@@ -79,7 +98,9 @@
 <body>
 
 <!-- Trigger button -->
-<button id="openModalBtn">MENU</button>
+<div class="menu-container">
+  <button id="openModalBtn">MENU</button>
+</div>
 
 <!-- Modal container -->
 <div id="modal" class="modal">
