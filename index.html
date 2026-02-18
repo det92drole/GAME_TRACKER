@@ -7,7 +7,7 @@
         .modal {
             display: none; /* hidden by default */
             position: fixed;
-            z-index: 1000;
+            z-index: 2000;
             left: 0;
             top: 0;
             width: 100%;
@@ -31,10 +31,22 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        #playerCount{
+            display: none; /* hidden by default */
+
+        }
+
+        #playerAndDeckSelect{
+            display: none; /* hidden by default */
+
         }
 
         #openModalBtn {
+            position:fixed;
             width: 150px;
             height: 150px;
             border-radius: 50%;       /* makes it a circle */
@@ -42,7 +54,7 @@
             font-size: 20px;
             font-weight: bold;
             cursor: pointer;
-            z-index: 1000;
+            pointer-events: auto; 
         }
 
         .close {
@@ -60,6 +72,8 @@
         #lifeContainer {
             display: grid;
             height: 100vh;
+            position: relative;
+            z-index: 1;
         }
 
         .player {
@@ -112,32 +126,42 @@
 </head>
 <body>
 
-<!-- Trigger button -->
-<div class="menu-container">
-  <button id="openModalBtn">MENU</button>
-</div>
+
 
 <!-- Modal container -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span id="closeModalBtn" class="close">&times;</span>
 
-    <h2>MENU</h2>
+    <div id="playerCount" class="menu-modal">
+        <h2>MENU</h2>
 
-    <!-- DETERMINE PLAYER COUNT -->
-    <h3>HOW MANY PLAYERS?</h3>
-    <div class="button-row">
-    <button id="numPlayer2" class="square-btn">2</button>
-    <button id="numPlayer3" class="square-btn">3</button>
-    <button id="numPlayer4" class="square-btn">4</button>
+        <!-- DETERMINE PLAYER COUNT -->
+        <h3>HOW MANY PLAYERS?</h3>
+        <div class="button-row">
+        <button id="numPlayer2" class="square-btn">2</button>
+        <button id="numPlayer3" class="square-btn">3</button>
+        <button id="numPlayer4" class="square-btn">4</button>
+        </div>
+
     </div>
-    
-    
+
+    <div id="playerAndDeckSelect" class="menu-modal">
+        <h2>PLAYER AND DECK SELECT</h2>
+
+
+    </div>
+
     
   </div>
 </div>
 
 <div id="lifeContainer"></div>
+
+<!-- Trigger button -->
+<div class="menu-container">
+  <button id="openModalBtn">MENU</button>
+</div>
 
 <script src="app.js"></script>
 
