@@ -64,10 +64,45 @@ const testPlayersSet=["none"]
 
 // Load from localStorage or create default
 const players = [];
+const savedPlayers=["maynard", "leonard", "bernard", "richard"];
 localStorage.setItem("players", JSON.stringify(players));
 
 //*****DATA SET END*****
 //******************
+
+// Function to populate dropdown
+let selectedPlayerIndex = null;
+
+function populateDropdown() {
+    const select = document.getElementById("playerSelect");
+    select.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+    placeholder.textContent = "Select a player";
+    placeholder.value = "";
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    select.appendChild(placeholder);
+
+    savedPlayers.forEach(player => {
+        const option = document.createElement("option");
+        option.value = player;
+        option.textContent = player;
+        select.appendChild(option);
+    });
+
+    document.getElementById("playerSelect").addEventListener("change", (e) => {
+
+    const newName = e.target.value;
+
+    if (selectedPlayerIndex !== null) {
+        players[selectedPlayerIndex].name = newName;
+        renderPlayers();
+    }
+
+    modal.style.display = "none";
+    });
+}
 
 function renderPlayers() {
   const container = document.getElementById("lifeContainer");
@@ -119,6 +154,9 @@ document.getElementById("lifeContainer").addEventListener("click", (e) => {
     renderPlayers();
   }
   if (e.target.classList.contains("life")){
+        selectedPlayerIndex = null;
+        selectedPlayerIndex = Number(e.target.dataset.index);
+        populateDropdown();
         modal.style.display = "block";
         modalPlayerSelect.style.display = "block";
 
