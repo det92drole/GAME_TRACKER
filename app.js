@@ -68,6 +68,7 @@ const players = [];
 const cmdDMG=[]; //[selectedPlayerIndex][j/i receiving damage from]
 const savedPlayers=["maynard", "leonard", "bernard", "richard"];
 localStorage.setItem("players", JSON.stringify(players));
+let gameObj=[];
 
 //*****DATA SET END*****
 //******************
@@ -129,20 +130,35 @@ function renderPlayers() {
     life.className = "life";
     
     // Create name div
-    const nameDiv = document.createElement("div");
-    nameDiv.className = "player-name";
-    nameDiv.textContent = player.name;
-    nameDiv.dataset.index = i;
+    if(players[i].dead==true){
+      const nameDiv = document.createElement("div");
+      nameDiv.className = "player-name";
+      const img = document.createElement("img");
+      img.src = "images/dead.jpg";   // path to your image
+      img.classList.add("dead-img");
+      img.style.width = "100px";
+      img.style.pointerEvents = "none"; // so clicks still hit the div
 
-    // Create life total div
-    const lifeTotalDiv = document.createElement("div");
-    lifeTotalDiv.dataset.index = i;
-    lifeTotalDiv.className = "player-life";
-    lifeTotalDiv.textContent = player.life;
+      life.appendChild(img);
 
-    // Append both to parent
-    life.appendChild(nameDiv);
-    life.appendChild(lifeTotalDiv);
+      nameDiv.dataset.index = i;
+    }else{
+      const nameDiv = document.createElement("div");
+      nameDiv.className = "player-name";
+      nameDiv.textContent = player.name;
+      nameDiv.dataset.index = i;
+
+      // Create life total div
+      const lifeTotalDiv = document.createElement("div");
+      lifeTotalDiv.dataset.index = i;
+      lifeTotalDiv.className = "player-life";
+      lifeTotalDiv.textContent = player.life;
+
+      // Append both to parent
+      life.appendChild(nameDiv);
+      life.appendChild(lifeTotalDiv);
+    }
+    
 
     const minus = document.createElement("div");
     minus.className = "zone minus";
@@ -157,8 +173,9 @@ function renderPlayers() {
 
 // Single event listener (clean + scalable) for life points
 document.getElementById("lifeContainer").addEventListener("click", (e) => {
+  const index = e.target.dataset.index;
   if (e.target.classList.contains("zone")) {
-    const index = e.target.dataset.index;
+    
     const change = Number(e.target.dataset.change);
 
     if (currentView<0) {
@@ -192,12 +209,26 @@ document.getElementById("lifeContainer").addEventListener("click", (e) => {
       return;
     }
   }
+
+  if(e.target.classList.contains("dead")){
+    // prevent adding multiple images
+    if (!e.target.querySelector(".dead-img")) {
+        const img = document.createElement("img");
+        img.src = "images/dead.jpg";   // path to your image
+        img.classList.add("dead-img");
+        players[index].dead=true;
+        img.style.width = "100px";
+        img.style.pointerEvents = "none"; // so clicks still hit the div
+
+        e.target.appendChild(img);
+    }
+  }
 });
 
 function startGame(intVal){
   turnCount=0;
     for(i=0;i<intVal;i++){
-      players[i]={name:testPlayersSet[0], life:20};
+      players[i]={name:testPlayersSet[0], life:20, dead:false};
       cmdDMG[i] = Array(intVal).fill(0);
     }
     renderPlayers()
@@ -219,6 +250,7 @@ function renderCommandMenu(selectedPlayerIndex){
 
   container.innerHTML = "";  // clear container
   players.forEach((player, i) => {
+
     const playerDiv = document.createElement("div");
     playerDiv.className = "player";
 
@@ -230,23 +262,44 @@ function renderCommandMenu(selectedPlayerIndex){
 
     const life = document.createElement("div");
     life.className = "life";
+
+    if(players[i].dead==true){
+      const nameDiv = document.createElement("div");
+      nameDiv.className = "cmdrDMG";
+      const img = document.createElement("img");
+      img.src = "images/dead.jpg";   // path to your image
+      img.classList.add("dead-img");
+      img.style.width = "100px";
+      img.style.pointerEvents = "none"; // so clicks still hit the div
+
+      life.appendChild(img);
+    }else{
+      if(i!=selectedPlayerIndex){
+        // Create name div
+        const nameDiv = document.createElement("div");
+        nameDiv.className = "cmdrDMG";
+        nameDiv.textContent = "cmdr ";
+        nameDiv.dataset.index = i;
+
+        // Create life total div
+        const lifeTotalDiv = document.createElement("div");
+        lifeTotalDiv.className = "player-life";
+        lifeTotalDiv.dataset.index = i;
+        lifeTotalDiv.textContent = cmdDMG[selectedPlayerIndex][i];
+
+        // Append both to parent
+        life.appendChild(nameDiv);
+        life.appendChild(lifeTotalDiv);
+      }else{
+        const nameDiv = document.createElement("div");
+        nameDiv.className = "dead";
+        nameDiv.textContent = "dead?";
+        nameDiv.dataset.index = i;
+        life.appendChild(nameDiv);
+      }
+    }
     
-    // Create name div
-    const nameDiv = document.createElement("div");
-    nameDiv.className = "cmdrDMG";
-    nameDiv.textContent = "cmdr ";
-    nameDiv.dataset.index = i;
-
-    // Create life total div
-    const lifeTotalDiv = document.createElement("div");
-    lifeTotalDiv.className = "player-life";
-    lifeTotalDiv.dataset.index = i;
-    lifeTotalDiv.textContent = cmdDMG[selectedPlayerIndex][i];
-
-    // Append both to parent
-    life.appendChild(nameDiv);
-    life.appendChild(lifeTotalDiv);
-
+    
     const minus = document.createElement("div");
     minus.className = "zone minus";
     minus.dataset.index = i;
@@ -267,4 +320,5 @@ turnMinus.addEventListener("click", () => {
   if (turnCount > 0) turnCount--;
   turnDisplay.textContent = turnCount;
 });
+
 
