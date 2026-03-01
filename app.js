@@ -30,7 +30,6 @@ window.addEventListener("click", (event) => {
     
 });
 
-
 //HOW MANY PLAYERS?
 document.getElementById("numPlayer2").addEventListener("click", ()=>{
     players.length=0;
@@ -118,7 +117,6 @@ function renderPlayers() {
     container.style.gridTemplateRows = "1fr 1fr";
   }
 
-
   container.innerHTML = "";  // clear container
   players.forEach((player, i) => {
     const playerDiv = document.createElement("div");
@@ -174,7 +172,7 @@ document.getElementById("lifeContainer").addEventListener("click", (e) => {
       players[index].life += change;
       renderPlayers();
     }else{
-      cmdDMG[index][currentView] += change;
+      cmdDMG[currentView][index] += change;
       renderCommandMenu(currentView);
     }
 
