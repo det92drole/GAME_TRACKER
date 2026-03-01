@@ -19,18 +19,15 @@ closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
     modalPlayerCountSelect.style.display="none";
     modalPlayerSelect.style.display = "none";
-
 });
 
 // Close if user clicks outside modal content
 window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.style.display = "none";
-        modalPlayerCountSelect.style.display="none";
-        modalPlayerSelect.style.display = "none";
-
-    }
-    
+  if (event.target === modal) {
+    modal.style.display = "none";
+    modalPlayerCountSelect.style.display="none";
+    modalPlayerSelect.style.display = "none";
+  } 
 });
 
 //HOW MANY PLAYERS?
@@ -44,14 +41,12 @@ document.getElementById("numPlayer3").addEventListener("click", ()=>{
     players.length=0;
     const container = document.getElementById("lifeContainer");
     container.innerHTML = "";  // clear container
-
     startGame(3);
 })
 document.getElementById("numPlayer4").addEventListener("click", ()=>{
     players.length=0;
     const container = document.getElementById("lifeContainer");
     container.innerHTML = "";  // clear container
-
     startGame(4);
 })
 
@@ -79,34 +74,32 @@ localStorage.setItem("players", JSON.stringify(players));
 
 // Function to populate dropdown
 function populateDropdown(playerIndex) {
-    const select = document.getElementById("playerSelect");
-    select.innerHTML = "";
+  const select = document.getElementById("playerSelect");
+  select.innerHTML = "";
+  const placeholder = document.createElement("option");
+  placeholder.textContent = "Select a player";
+  placeholder.value = "";
+  placeholder.disabled = true;
+  placeholder.selected = true;
+  select.appendChild(placeholder);
+  savedPlayers.forEach(player => {
+    const option = document.createElement("option");
+    option.value = player;
+    option.textContent = player;
+    select.appendChild(option);
+  });
 
-    const placeholder = document.createElement("option");
-    placeholder.textContent = "Select a player";
-    placeholder.value = "";
-    placeholder.disabled = true;
-    placeholder.selected = true;
-    select.appendChild(placeholder);
-
-    savedPlayers.forEach(player => {
-        const option = document.createElement("option");
-        option.value = player;
-        option.textContent = player;
-        select.appendChild(option);
-    });
-
-    document.getElementById("playerSelect").addEventListener("change", (e) => {
+  document.getElementById("playerSelect").addEventListener("change", (e) => {
 
     const newName = e.target.value;
       
     if (playerIndex !== null) {
-        players[playerIndex].name = newName;
-        renderPlayers();
+      players[playerIndex].name = newName;
+      renderPlayers();
     }
 
     modal.style.display = "none";
-    });
+  });
 }
 
 function renderPlayers() {
@@ -135,7 +128,6 @@ function renderPlayers() {
     const life = document.createElement("div");
     life.className = "life";
     
-
     // Create name div
     const nameDiv = document.createElement("div");
     nameDiv.className = "player-name";
@@ -164,14 +156,11 @@ function renderPlayers() {
 }
 
 // Single event listener (clean + scalable) for life points
-
-
-
 document.getElementById("lifeContainer").addEventListener("click", (e) => {
   if (e.target.classList.contains("zone")) {
     const index = e.target.dataset.index;
     const change = Number(e.target.dataset.change);
-    
+
     if (currentView<0) {
       players[index].life += change;
       renderPlayers();
@@ -179,18 +168,15 @@ document.getElementById("lifeContainer").addEventListener("click", (e) => {
       cmdDMG[currentView][index] += change;
       renderCommandMenu(currentView);
     }
-
   }
   if (e.target.classList.contains("player-name")){
     console.log("testchangeplayer");
     populateDropdown(e.target.dataset.index);
     modal.style.display = "block";
     modalPlayerSelect.style.display = "block";
-
   }
 
   if (e.target.classList.contains("player-life")){
-    
     console.log("gameEnd?");
     console.log("currentView "+currentView);
     //commander damage func here
@@ -205,18 +191,15 @@ document.getElementById("lifeContainer").addEventListener("click", (e) => {
       renderPlayers();
       return;
     }
-
   }
-  
 });
 
 function startGame(intVal){
   turnCount=0;
     for(i=0;i<intVal;i++){
-        players[i]={name:testPlayersSet[0], life:20};
-        cmdDMG[i] = Array(intVal).fill(0);
+      players[i]={name:testPlayersSet[0], life:20};
+      cmdDMG[i] = Array(intVal).fill(0);
     }
-
     renderPlayers()
 }
 
@@ -248,7 +231,6 @@ function renderCommandMenu(selectedPlayerIndex){
     const life = document.createElement("div");
     life.className = "life";
     
-
     // Create name div
     const nameDiv = document.createElement("div");
     nameDiv.className = "cmdrDMG";
@@ -277,12 +259,12 @@ function renderCommandMenu(selectedPlayerIndex){
 }
 
 turnPlus.addEventListener("click", () => {
-    turnCount++;
-    turnDisplay.textContent = turnCount;
+  turnCount++;
+  turnDisplay.textContent = turnCount;
 });
 
 turnMinus.addEventListener("click", () => {
-    if (turnCount > 0) turnCount--;
-    turnDisplay.textContent = turnCount;
+  if (turnCount > 0) turnCount--;
+  turnDisplay.textContent = turnCount;
 });
 
