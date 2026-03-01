@@ -6,6 +6,9 @@ const closeBtn = document.getElementById("closeModalBtn");
 const modalPlayerSelect=document.getElementById("playerAndDeckSelect"); //player and deck select on modal
 const modalPlayerCountSelect=document.getElementById("playerCount"); //player count select modal
 const container = document.getElementById("lifeContainer");
+const turnDisplay = document.getElementById("turnCount");
+const turnPlus = document.getElementById("turnPlus");
+const turnMinus = document.getElementById("turnMinus");
 
 openBtn.addEventListener("click", () => {
     modal.style.display = "block";
@@ -63,6 +66,7 @@ const testPlayersSet=["none"]
 //TEST DATA SET END*****
 
 // Load from localStorage or create default
+let turnCount=0;
 let clickLocked=false;
 let currentView=-1;
 const players = [];
@@ -207,6 +211,7 @@ document.getElementById("lifeContainer").addEventListener("click", (e) => {
 });
 
 function startGame(intVal){
+  turnCount=0;
     for(i=0;i<intVal;i++){
         players[i]={name:testPlayersSet[0], life:20};
         cmdDMG[i] = Array(intVal).fill(0);
@@ -270,4 +275,14 @@ function renderCommandMenu(selectedPlayerIndex){
     container.appendChild(playerDiv);
   });
 }
+
+turnPlus.addEventListener("click", () => {
+    turnCount++;
+    turnDisplay.textContent = turnCount;
+});
+
+turnMinus.addEventListener("click", () => {
+    if (turnCount > 0) turnCount--;
+    turnDisplay.textContent = turnCount;
+});
 
