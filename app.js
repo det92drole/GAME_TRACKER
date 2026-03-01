@@ -71,9 +71,7 @@ localStorage.setItem("players", JSON.stringify(players));
 //******************
 
 // Function to populate dropdown
-let selectedPlayerIndex = null;
-
-function populateDropdown() {
+function populateDropdown(playerIndex) {
     const select = document.getElementById("playerSelect");
     select.innerHTML = "";
 
@@ -94,9 +92,9 @@ function populateDropdown() {
     document.getElementById("playerSelect").addEventListener("change", (e) => {
 
     const newName = e.target.value;
-
-    if (selectedPlayerIndex !== null) {
-        players[selectedPlayerIndex].name = newName;
+      
+    if (playerIndex !== null) {
+        players[playerIndex].name = newName;
         renderPlayers();
     }
 
@@ -130,8 +128,22 @@ function renderPlayers() {
 
     const life = document.createElement("div");
     life.className = "life";
-    life.dataset.index = i;
-    life.textContent = `${player.name} ${player.life}`;
+    
+
+    // Create name div
+    const nameDiv = document.createElement("div");
+    nameDiv.className = "player-name";
+    nameDiv.textContent = player.name;
+    nameDiv.dataset.index = i;
+
+    // Create life total div
+    const lifeTotalDiv = document.createElement("div");
+    lifeTotalDiv.className = "player-life";
+    lifeTotalDiv.textContent = player.life;
+
+    // Append both to parent
+    life.appendChild(nameDiv);
+    life.appendChild(lifeTotalDiv);
 
     const minus = document.createElement("div");
     minus.className = "zone minus";
@@ -153,14 +165,14 @@ document.getElementById("lifeContainer").addEventListener("click", (e) => {
     players[index].life += change;
     renderPlayers();
   }
-  if (e.target.classList.contains("life")){
-        selectedPlayerIndex = null;
-        selectedPlayerIndex = Number(e.target.dataset.index);
-        populateDropdown();
+  if (e.target.classList.contains("player-name")){
+    console.log("testchangeplayer");
+        populateDropdown(e.target.dataset.index);
         modal.style.display = "block";
         modalPlayerSelect.style.display = "block";
 
   }
+  
 });
 
 function startGame(intVal){

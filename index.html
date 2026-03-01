@@ -85,6 +85,20 @@
             position: relative;
         }
 
+        .life {
+            display: flex;
+            justify-content: space-between; /* pushes them apart */
+            align-items: center;
+        }
+
+        .player-name {
+            font-weight: bold;
+        }
+
+        .player-life {
+            margin-left: 10px;
+        }
+
         .zone {
             flex: 1;
             width: 100%;
@@ -168,33 +182,7 @@
 <script src="app.js"></script>
 
 <script>
-// Add new player
-// document.getElementById("addPlayerBtn").addEventListener("click", () => {
-//     const newPlayer = document.getElementById("newPlayer").value.trim();
-//     if (!newPlayer) return;
 
-//     if (!players.includes(newPlayer)) {
-//         players.push(newPlayer);
-//         localStorage.setItem("players", JSON.stringify(players));
-//         populateDropdown();
-//     }
-//     document.getElementById("newPlayer").value = "";
-// });
-
-// <!-- File input to load JSON -->
-//     <input type="file" id="jsonFile" accept=".json">
-//     <button id="loadBtn">Load JSON</button>
-
-//     <hr>
-
-//     <!-- Dropdown populated from localStorage -->
-//     <select id="playerSelect">
-//         <option value="">Select a player</option>
-//     </select>
-
-//     <!-- Add new player -->
-//     <input type="text" id="newPlayer" placeholder="Add new player">
-//     <button id="addPlayerBtn">Add Player</button>
 </script>
 
 </body>
