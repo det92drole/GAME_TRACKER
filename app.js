@@ -218,9 +218,16 @@ document.getElementById("lifeContainer").addEventListener("click", (e) => {
         img.classList.add("dead-img");
         players[index].dead=true;
         img.style.width = "100px";
-        img.style.pointerEvents = "none"; // so clicks still hit the div
 
         e.target.appendChild(img);
+    }
+  }
+
+  if(e.target.classList.contains("dead-img")){
+    if(currentView>=0){
+      console.log("deadIMGclick");
+      renderPlayers();
+      return;
     }
   }
 });
