@@ -74,7 +74,38 @@ let gameObj=[];
 //******************
 
 // Function to populate dropdown
+let currentPlayerIndex = null;
+
+document.getElementById("playerSelect").addEventListener("change", (e) => {
+
+    var newName = e.target.value;
+
+    if(newName==="__custom__"){
+      const name = prompt("Enter a new player name:");
+      if (name && name.trim() !== "") {
+      newName = name.trim();
+      }else{
+        newName="-----";
+      }
+      // Save it
+      if (!savedPlayers.includes(newName)&&newName!="-----") {
+        savedPlayers.push(newName);
+      }
+    }
+
+    if (currentPlayerIndex !== null) {
+      players[currentPlayerIndex].name = newName;
+      renderPlayers();
+      modal.style.display = "none";
+      modalPlayerCountSelect.style.display="none";
+      modalPlayerSelect.style.display = "none";
+    }
+
+    //modalPlayerSelect.style.display = "none";
+  });
+
 function populateDropdown(playerIndex) {
+  currentPlayerIndex=playerIndex;
   const select = document.getElementById("playerSelect");
   select.innerHTML = "";
   const placeholder = document.createElement("option");
@@ -90,17 +121,11 @@ function populateDropdown(playerIndex) {
     select.appendChild(option);
   });
 
-  document.getElementById("playerSelect").addEventListener("change", (e) => {
+  const customOption = document.createElement("option");
+  customOption.value = "__custom__";
+  customOption.textContent = "Enter new name...";
+  select.appendChild(customOption);
 
-    const newName = e.target.value;
-      
-    if (playerIndex !== null) {
-      players[playerIndex].name = newName;
-      renderPlayers();
-    }
-
-    modal.style.display = "none";
-  });
 }
 
 function renderPlayers() {
@@ -235,7 +260,7 @@ document.getElementById("lifeContainer").addEventListener("click", (e) => {
 function startGame(intVal){
   turnCount=0;
     for(i=0;i<intVal;i++){
-      players[i]={name:testPlayersSet[0], life:20, dead:false};
+      players[i]={name:testPlayersSet[0], life:40, dead:false};
       cmdDMG[i] = Array(intVal).fill(0);
     }
     renderPlayers()
