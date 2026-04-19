@@ -1,5 +1,7 @@
 
 //MENU BUTTON==========
+
+
 const modal = document.getElementById("modal"); //modal menu
 const openBtn = document.getElementById("openModalBtn");
 const closeBtn = document.getElementById("closeModalBtn");
@@ -11,8 +13,11 @@ const turnPlus = document.getElementById("turnPlus");
 const turnMinus = document.getElementById("turnMinus");
 
 openBtn.addEventListener("click", () => {
+  //main menu
     modal.style.display = "block";
     modalPlayerCountSelect.style.display="block";
+
+
 });
 
 closeBtn.addEventListener("click", () => {
@@ -130,7 +135,7 @@ function populateDropdown(playerIndex) {
 
 function renderPlayers() {
   currentView=-1;
-    
+  document.getElementById("turnCount").textContent = turnCount;  
   // Adjust grid layout based on player count
   if (players.length <= 2) {
     container.style.gridTemplateColumns = "1fr";
@@ -345,12 +350,15 @@ function renderCommandMenu(selectedPlayerIndex){
 
 turnPlus.addEventListener("click", () => {
   turnCount++;
+  console.log("count:", turnCount);
   turnDisplay.textContent = turnCount;
+  renderPlayers();
 });
 
 turnMinus.addEventListener("click", () => {
   if (turnCount > 0) turnCount--;
   turnDisplay.textContent = turnCount;
+  renderPlayers();
 });
 
 
