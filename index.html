@@ -19,28 +19,34 @@
             justify-content: center;
             align-items: center;
             border: 1px solid black;
-            font-size: 24px;
+        }
+
+        .lifeRow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lifeTotal {
+            font-size: 32px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .lifeBtn {
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
         }
 
         /* Positioning */
-        #player0 {
-            grid-row: 1;
-            grid-column: 1;
-        }
 
-        #player1 {
-            grid-row: 1;
-            grid-column: 2;
-        }
-
-        #player2 {
-            grid-row: 3;
-            grid-column: 1;
-        }
-
-        #player3 {
-            grid-row: 3;
-            grid-column: 2;
+        #playerGrid {
+            grid-row: 1 / span 3;
+            grid-column: 1 / span 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
         }
 
         /* Middle control bar */
@@ -67,21 +73,115 @@
             min-width: 40px;
             text-align: center;
         }
+
+        /*MODAL MENU*/
+        .modal {
+            display: none; /* hidden by default */
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5); /* dark overlay */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+        }
+        .menu-container {
+            position: fixed;
+            inset: 0; /* fills entire screen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        #menuWrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            pointer-events: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Main menu button */
+        #openModalBtn {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- Modal container -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close">&times;</span>
+
+
+            <div id="playerCount" class="menu-modal">
+
+                <h2>MENU</h2>
+
+                <!-- DETERMINE PLAYER COUNT -->
+                <h3>HOW MANY PLAYERS?</h3>
+                <div class="button-row">
+                    <button id="numPlayer2" class="square-btn">2</button>
+                    <button id="numPlayer3" class="square-btn">3</button>
+                    <button id="numPlayer4" class="square-btn">4</button>
+                </div>
+
+                <h3>END GAME?</h3>
+
+                <select id="winnerSelect">
+                    <option value="">Winner!</option>
+
+                </select>
+
+                <div id="gameSummary">
+                    <span id="finalTurnCount">0</span>
+                </div>
+
+                <button id="submitGameBtn">Submit Result</button>
+
+            </div>
+
+            <div id="playerAndDeckSelect" class="menu-modal">
+                <!-- PLAYER SELECT DROP DOWN-->
+                <h2>PLAYER AND DECK SELECT</h2>
+                <select id="playerSelect">
+                    <option value="">Select a player</option>
+                </select>
+
+            </div>
+        </div>
+    </div>
+
+
     <div id="gameContainer">
 
-        <!-- Top Row -->
-        <div class="quadrant" id="player0">
-            <div class="playerName">Player 1</div>
-            <div class="lifeTotal">40</div>
-        </div>
 
-        <div class="quadrant" id="player1">
-            <div class="playerName">Player 2</div>
-            <div class="lifeTotal">40</div>
-        </div>
+        <!--Player Grid-->
+        <div id="playerGrid"></div>
 
         <!-- Middle Bar -->
         <div id="middleBar">
@@ -89,25 +189,15 @@
 
             <div id="turnTracker">
                 <button id="turnMinus">-</button>
-                <div id="turnCount">0</div>
+                <div id="turnCountDisplay">0</div>
                 <button id="turnPlus">+</button>
             </div>
         </div>
 
-        <!-- Bottom Row -->
-        <div class="quadrant" id="player2">
-            <div class="playerName">Player 3</div>
-            <div class="lifeTotal">40</div>
-        </div>
-
-        <div class="quadrant" id="player3">
-            <div class="playerName">Player 4</div>
-            <div class="lifeTotal">40</div>
-        </div>
 
     </div>
 
-    <script></script>
+    <script src="app.js"></script>
 
 </body>
 </html>
