@@ -11,9 +11,11 @@ const modalPlayerSelect = document.getElementById("playerAndDeckSelect"); //play
 let players = [];
 let savedPlayers = ["maynard", "leonard", "bernard", "richard"];
 let currentPlayerIndex = null; // for deck select drop down
+let startedGame = false;
 
 //FUNCTIONS
 function initPlayers(count) {
+    startedGame = true;
     players = [];
 
     for (let i = 0; i < count; i++) {
@@ -77,9 +79,15 @@ function showModal(screen) {
     document.querySelectorAll(".menu-modal").forEach(el => {
         el.style.display = "none";
     });
-
+    
+    if (startedGame) {
+        document.getElementById("endGameSave").style.display = "block";
+    }
     document.getElementById(screen).style.display = "block";
+    
 }
+
+//#####***EVENT_LISTENERS***#####
 
 // ***LIFE BTN*** CLICK EVENT LISTENER 
 document.addEventListener("click", (e) => {
