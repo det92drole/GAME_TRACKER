@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Local JSON Player Tracker</title>
+    <style>
+        /* Main layout */
+        #gameContainer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr auto 1fr;
+            height: 100vh;
+        }
+
+        /* Player quadrants */
+        .quadrant {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+            font-size: 24px;
+        }
+
+        /* Positioning */
+        #player0 {
+            grid-row: 1;
+            grid-column: 1;
+        }
+
+        #player1 {
+            grid-row: 1;
+            grid-column: 2;
+        }
+
+        #player2 {
+            grid-row: 3;
+            grid-column: 1;
+        }
+
+        #player3 {
+            grid-row: 3;
+            grid-column: 2;
+        }
+
+        /* Middle control bar */
+        #middleBar {
+            grid-row: 2;
+            grid-column: 1 / span 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-top: 2px solid black;
+            border-bottom: 2px solid black;
+        }
+
+        /* Turn tracker */
+        #turnTracker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #turnCount {
+            font-size: 24px;
+            min-width: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+
+        <!-- Top Row -->
+        <div class="quadrant" id="player0">
+            <div class="playerName">Player 1</div>
+            <div class="lifeTotal">40</div>
+        </div>
+
+        <div class="quadrant" id="player1">
+            <div class="playerName">Player 2</div>
+            <div class="lifeTotal">40</div>
+        </div>
+
+        <!-- Middle Bar -->
+        <div id="middleBar">
+            <button id="menuBtn">Menu</button>
+
+            <div id="turnTracker">
+                <button id="turnMinus">-</button>
+                <div id="turnCount">0</div>
+                <button id="turnPlus">+</button>
+            </div>
+        </div>
+
+        <!-- Bottom Row -->
+        <div class="quadrant" id="player2">
+            <div class="playerName">Player 3</div>
+            <div class="lifeTotal">40</div>
+        </div>
+
+        <div class="quadrant" id="player3">
+            <div class="playerName">Player 4</div>
+            <div class="lifeTotal">40</div>
+        </div>
+
+    </div>
+
+    <script></script>
+
+</body>
+</html>
