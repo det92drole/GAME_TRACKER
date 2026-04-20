@@ -12,6 +12,7 @@ let players = [];
 let savedPlayers = ["maynard", "leonard", "bernard", "richard"];
 let currentPlayerIndex = null; // for deck select drop down
 let startedGame = false;
+let currentView = -1;
 
 //FUNCTIONS
 function initPlayers(count) {
@@ -21,7 +22,8 @@ function initPlayers(count) {
     for (let i = 0; i < count; i++) {
         players.push({
             name: `Player ${i + 1}`,
-            life: 40
+            life: 40,
+            cmdDMG: [0, 0, 0, 0]
         });
     }
 
@@ -87,6 +89,72 @@ function showModal(screen) {
     
 }
 
+function renderCommanderDamage() {
+        
+    const grid = document.getElementById("playerGrid");
+    grid.innerHTML = "";
+    
+    players.forEach((player, i) => {
+
+        const quadrant = document.createElement("div");
+        quadrant.className = "quadrant";
+        quadrant.dataset.index = i;
+
+        
+
+        // CENTER DISPLAY
+        const center = document.createElement("div");
+        center.className = "life";
+        if (i == currentView) {
+
+            const nameDiv = document.createElement("div");
+            nameDiv.className = "cmdrDMG";
+            nameDiv.dataset.index = i;
+
+            const dmgDiv = document.createElement("div");
+            dmgDiv.className = "cmd-life";
+            dmgDiv.dataset.index = i;
+            dmgDiv.textContent = "ATK4CMD"; //shows how much damage selected player hs done to each player(i)
+
+            center.appendChild(nameDiv);
+            center.appendChild(dmgDiv);
+            quadrant.append(center);
+
+        }else{
+            
+            const nameDiv = document.createElement("div");
+            nameDiv.className = "cmdrDMG";
+            nameDiv.dataset.index = i;
+
+            const dmgDiv = document.createElement("div");
+            dmgDiv.className = "cmd-life";
+            dmgDiv.dataset.index = i;
+            dmgDiv.textContent = players[i].cmdDMG[currentView]; //shows how much damage selected player hs done to each player(i)
+
+            center.appendChild(nameDiv);
+            center.appendChild(dmgDiv);
+
+            // PLUS
+            const plus = document.createElement("div");
+            plus.className = "zone plus";
+            plus.dataset.index = i;
+            plus.dataset.change = 1;
+            plus.textContent = "+";
+            // MINUS
+            const minus = document.createElement("div");
+            minus.className = "zone minus";
+            minus.dataset.index = i;
+            minus.dataset.change = -1;
+            minus.textContent = "-";
+            quadrant.append(plus, center, minus);
+        } 
+        
+
+        
+        grid.appendChild(quadrant);
+    });
+}
+
 //#####***EVENT_LISTENERS***#####
 
 // ***LIFE BTN*** CLICK EVENT LISTENER 
@@ -119,6 +187,20 @@ closeMenuBtn.addEventListener("click", () => {
     modalPlayerCountSelect.style.display = "none";
 
 });
+
+// Close if user clicks outside modal content
+window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
+        modalPlayerCountSelect.style.display = "none";
+    }
+});
+
+//player count listener
+
+document.getElementById("numPlayer2").onclick = () => initPlayers(2);
+document.getElementById("numPlayer3").onclick = () => initPlayers(3);
+document.getElementById("numPlayer4").onclick = () => initPlayers(4);
 
 // *** ***
 
@@ -175,18 +257,50 @@ document.getElementById("playerSelect").addEventListener("change", (e) => {
 
 // *** ***
 
-// Close if user clicks outside modal content
-window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.style.display = "none";
-        modalPlayerCountSelect.style.display = "none";
+// *** COMMANDER DMG LISTENER ***
+
+document.getElementById("playerGrid").addEventListener("click", (e) => {
+
+    //ZONE (+ / - buttons)
+    const zone = e.target.closest(".zone");
+    if (zone) {
+        const index = Number(zone.dataset.index);
+        const change = Number(zone.dataset.change);
+        if (currentView < 0) {
+            players[index].life += change;
+            renderPlayers();
+        } else {
+            players[index].life += change;
+            players[index].cmdDMG[currentView] += change;
+            renderCommanderDamage();
+        }
+
+        return;
     }
+
+    //LIFE CLICK (toggle commander view)
+    const life = e.target.closest(".quadrant", ".lifeTotal");
+    if (life) {
+        const index = Number(life.dataset.index);
+        console.log(life.dataset.index);
+        console.log(Number(life.dataset.index));
+        if (currentView < 0) {
+            currentView = index;
+            console.log(currentView);
+            console.log("preCMD");
+            renderCommanderDamage(index);
+        } else {
+            currentView = -1;
+            console.log("postCMD");
+            renderPlayers();
+        }
+
+        return;
+    }
+
 });
 
-// *** ***
 
-//GAME CALLS:
+//*** ***
 
-document.getElementById("numPlayer2").onclick = () => initPlayers(2);
-document.getElementById("numPlayer3").onclick = () => initPlayers(3);
-document.getElementById("numPlayer4").onclick = () => initPlayers(4);
+//END
