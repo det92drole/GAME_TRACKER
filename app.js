@@ -4,15 +4,16 @@ const modal = document.getElementById("modal"); //modal menu
 const closeMenuBtn = document.getElementById("closeModalBtn");
 const modalPlayerCountSelect = document.getElementById("playerCount"); //player count select modal
 const menuBtn = document.getElementById("menuBtn");
-
 const modalPlayerSelect = document.getElementById("playerAndDeckSelect"); //player and deck select on modal
 
-
+const turnTracker = document.getElementById("turnTracker");
+const turnTrackerCountDisplay = document.getElementById("turnCountDisplay");
 let players = [];
 let savedPlayers = ["maynard", "leonard", "bernard", "richard"];
 let currentPlayerIndex = null; // for deck select drop down
 let startedGame = false;
 let currentView = -1;
+let turnCountVal = 0;
 
 //FUNCTIONS
 function initPlayers(count) {
@@ -300,6 +301,27 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
 
 });
 
+//*** ***
+
+//*** TURN TRACKER LISTENER ***
+
+turnTracker.addEventListener("click", (e) => {
+
+    if (e.target.closest("#turnPlus")) {
+        turnCountVal += 1;
+        turnTrackerCountDisplay.textContent = turnCountVal;
+    }
+
+    if (e.target.closest("#turnMinus")) {
+        turnCountVal -= 1;
+
+        if (turnCountVal < 0) {
+            turnCountVal = 0;
+        }
+        turnTrackerCountDisplay.textContent = turnCountVal;
+    }
+
+});
 
 //*** ***
 
