@@ -271,8 +271,13 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
             players[index].life += change;
             renderPlayers();
         } else {
-            players[index].life += change;
-            players[index].cmdDMG[currentView] += change;
+            if (players[index].cmdDMG[currentView]+(change)<0) {
+                return;
+            }else{
+                players[index].life += change*(-1);
+                
+                players[index].cmdDMG[currentView] += change;
+            }
             renderCommanderDamage();
         }
 
