@@ -28,7 +28,6 @@ function initPlayers(count) {
             twoCommanders: false
         });
     }
-
     renderPlayers();
 }
 function populateDropdown(playerIndex) {
@@ -52,7 +51,6 @@ function populateDropdown(playerIndex) {
     customOption.value = "__custom__";
     customOption.textContent = "Enter new name...";
     select.appendChild(customOption);
-
 }
 function renderPlayers() {
     const grid = document.getElementById("playerGrid");
@@ -88,7 +86,6 @@ function showModal(screen) {
         document.getElementById("endGameSave").style.display = "block";
     }
     document.getElementById(screen).style.display = "block";
-    
 }
 
 function renderCommanderDamage() {
@@ -216,7 +213,6 @@ document.addEventListener("click", (e) => {
     if (e.target.classList.contains("minus")) {
         players[index].life--;
     }
-
     renderPlayers();
 });
 // *** ***
@@ -230,7 +226,6 @@ menuBtn.addEventListener("click", () => {
 closeMenuBtn.addEventListener("click", () => {
     modal.style.display = "none";
     modalPlayerCountSelect.style.display = "none";
-
 });
 
 // Close if user clicks outside modal content
@@ -257,13 +252,11 @@ document.getElementById("gameContainer").addEventListener("click", (e) => {
 
     const index = quadrant.dataset.index;
 
-
     if (e.target.classList.contains("playerName")) {
         populateDropdown(index);
         modal.style.display = "block";
         modalPlayerSelect.style.display = "block";
     }
-
 });
 
 document.getElementById("playerSelect").addEventListener("change", (e) => {
@@ -290,7 +283,6 @@ document.getElementById("playerSelect").addEventListener("change", (e) => {
         modalPlayerCountSelect.style.display = "none";
         modalPlayerSelect.style.display = "none";
     }
-
     //modalPlayerSelect.style.display = "none";
 });
 
@@ -318,20 +310,16 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
                 if (value[cmd] + change < 0) return;
 
                 value[cmd] += change;
-
             } else {
                 // single commander
                 if (value + change < 0) return;
 
                 players[index].cmdDMG[currentView] += change;
             }
-
             // life adjustment (this part you had correct idea-wise)
             players[index].life -= change;
-
             renderCommanderDamage(currentView);
         }
-
         return;
     }
 
@@ -339,13 +327,11 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
     const toggle = e.target.closest(".commanderToggle");
 
     if (toggle) {
-        console.log("TWOCMDBUTTON");
         const index = Number(toggle.dataset.index);
         players[index].twoCommanders = !players[index].twoCommanders;
         //update cmdDMG to have two commanders
 
         if (players[index].twoCommanders === true) {
-            console.log("check array cmd toggle");
 
             for (let p = 0; p < players.length; p++) {
 
@@ -365,12 +351,10 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
                 }
             }
         }
-
         toggle.textContent = players[index].twoCommanders
             ? "2 Commanders: ON"
             : "2 Commanders: OFF";
 
-        console.log("Two commanders: ", players[index].twoCommanders);
         renderCommanderDamage();
         return;
     }
@@ -382,19 +366,13 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
         const index = Number(life.dataset.index);
         if (currentView < 0) {
             currentView = index;
-            console.log("currentView " +currentView);
-            console.log("preCMD");
             renderCommanderDamage(index);
         } else {
             currentView = -1;
-            console.log("postCMD");
             renderPlayers();
         }
-
         return;
     }
-       
-
 });
 
 //*** ***
@@ -416,7 +394,6 @@ turnTracker.addEventListener("click", (e) => {
         }
         turnTrackerCountDisplay.textContent = turnCountVal;
     }
-
 });
 
 //*** ***
