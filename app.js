@@ -24,7 +24,8 @@ function initPlayers(count) {
         players.push({
             name: `Player ${i + 1}`,
             life: 40,
-            cmdDMG: [0, 0, 0, 0]
+            cmdDMG: [0, 0, 0, 0],
+            twoCommanders: false
         });
     }
 
@@ -117,8 +118,16 @@ function renderCommanderDamage() {
             dmgDiv.dataset.index = i;
             dmgDiv.textContent = "ATK4CMD"; //shows how much damage selected player hs done to each player(i)
 
+            const twoCmdBtn = document.createElement("button");
+            twoCmdBtn.className = "commanderToggle";
+            twoCmdBtn.textContent = players[i].twoCommanders
+                ? "2 Commanders: ON"
+                : "2 Commanders: OFF";
+            twoCmdBtn.dataset.index = i;
+
             center.appendChild(nameDiv);
             center.appendChild(dmgDiv);
+            center.appendChild(twoCmdBtn);
             quadrant.append(center);
 
         }else{
@@ -265,7 +274,7 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
     //ZONE (+ / - buttons)
     const zone = e.target.closest(".zone");
     if (zone) {
-        const index = Number(zone.dataset.index);
+        
         const change = Number(zone.dataset.change);
         if (currentView < 0) {
             players[index].life += change;
@@ -273,7 +282,10 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
         } else {
             if (players[index].cmdDMG[currentView]+(change)<0) {
                 return;
-            }else{
+            } else {
+
+                
+                
                 players[index].life += change*(-1);
                 
                 players[index].cmdDMG[currentView] += change;
@@ -284,8 +296,26 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
         return;
     }
 
+    // TOGGLE MULTI COMMANDER
+    const toggle = e.target.closest(".commanderToggle");
+
+    if (toggle) {
+        console.log("TWOCMDBUTTON");
+        const index = Number(toggle.dataset.index);
+        players[index].twoCommanders = !players[index].twoCommanders;
+
+        toggle.textContent = players[index].twoCommanders
+            ? "2 Commanders: ON"
+            : "2 Commanders: OFF";
+
+        console.log("Two commanders: ", players[index].twoCommanders);
+
+        return;
+    }
+
     //LIFE CLICK (toggle commander view)
     const life = e.target.closest(".quadrant", ".lifeTotal");
+
     if (life) {
         const index = Number(life.dataset.index);
         console.log(life.dataset.index);
@@ -303,6 +333,7 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
 
         return;
     }
+       
 
 });
 
