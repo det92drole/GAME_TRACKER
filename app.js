@@ -102,8 +102,6 @@ function renderCommanderDamage() {
         quadrant.className = "quadrant";
         quadrant.dataset.index = i;
 
-        
-
         // CENTER DISPLAY
         const center = document.createElement("div");
         center.className = "life";
@@ -130,37 +128,74 @@ function renderCommanderDamage() {
             center.appendChild(twoCmdBtn);
             quadrant.append(center);
 
-        }else{
-            
-            const nameDiv = document.createElement("div");
-            nameDiv.className = "cmdrDMG";
-            nameDiv.dataset.index = i;
+        } else {
+            //rework 
+            if (players[currentView].twoCommanders===true) {
+                for (let cmd = 0; cmd < 2; cmd++) {
 
-            const dmgDiv = document.createElement("div");
-            dmgDiv.className = "cmd-life";
-            dmgDiv.dataset.index = i;
-            dmgDiv.textContent = players[i].cmdDMG[currentView]; //shows how much damage selected player hs done to each player(i)
+                    const row = document.createElement("div");
+                    row.className = "cmd-row";
 
-            center.appendChild(nameDiv);
-            center.appendChild(dmgDiv);
+                    const nameDiv = document.createElement("div");
+                    nameDiv.className = "cmdrDMG";
+                    nameDiv.dataset.index = i;
 
-            // PLUS
-            const plus = document.createElement("div");
-            plus.className = "zone plus";
-            plus.dataset.index = i;
-            plus.dataset.change = 1;
-            plus.textContent = "+";
-            // MINUS
-            const minus = document.createElement("div");
-            minus.className = "zone minus";
-            minus.dataset.index = i;
-            minus.dataset.change = -1;
-            minus.textContent = "-";
-            quadrant.append(plus, center, minus);
+                    const dmgDiv = document.createElement("div");
+                    dmgDiv.className = "cmd-life";
+                    dmgDiv.dataset.index = i;
+                    dmgDiv.dataset.cmd = cmd; // record which commander
+                    dmgDiv.textContent = players[i].cmdDMG[cmd]?.[currentView] ?? 0;
+
+                    // PLUS
+                    const plus = document.createElement("div");
+                    plus.className = "zone plus";
+                    plus.dataset.index = i;
+                    plus.dataset.cmd = cmd;
+                    plus.dataset.change = 1;
+                    plus.textContent = "+";
+                    // MINUS
+                    const minus = document.createElement("div");
+                    minus.className = "zone minus";
+                    minus.dataset.index = i;
+                    minus.dataset.cmd = cmd;
+                    minus.dataset.change = -1;
+                    minus.textContent = "-";
+
+                    row.append(plus, nameDiv, dmgDiv, minus);
+
+                    // Add to center
+                    center.appendChild(row);
+
+                    // Add center once per quadrant (not inside loop ideally)
+                    quadrant.appendChild(center);
+                }
+            } else {
+                const nameDiv = document.createElement("div");
+                nameDiv.className = "cmdrDMG";
+                nameDiv.dataset.index = i;
+
+                const dmgDiv = document.createElement("div");
+                dmgDiv.className = "cmd-life";
+                dmgDiv.dataset.index = i;
+                dmgDiv.textContent = players[i].cmdDMG[currentView]; //shows how much damage selected player hs done to each player(i)
+
+                center.appendChild(nameDiv);
+                center.appendChild(dmgDiv);
+                // PLUS
+                const plus = document.createElement("div");
+                plus.className = "zone plus";
+                plus.dataset.index = i;
+                plus.dataset.change = 1;
+                plus.textContent = "+";
+                // MINUS
+                const minus = document.createElement("div");
+                minus.className = "zone minus";
+                minus.dataset.index = i;
+                minus.dataset.change = -1;
+                minus.textContent = "-";
+                quadrant.append(plus, center, minus);
+            }
         } 
-        
-
-        
         grid.appendChild(quadrant);
     });
 }
@@ -188,7 +223,6 @@ document.addEventListener("click", (e) => {
 // ***MENU BTN*** CLICK EVENT LISTENER
 
 menuBtn.addEventListener("click", () => {
-    console.log("menu click");
     showModal("playerCount");
 });
 
@@ -222,11 +256,8 @@ document.getElementById("gameContainer").addEventListener("click", (e) => {
 
     const index = quadrant.dataset.index;
 
-    console.log(index);
 
     if (e.target.classList.contains("playerName")) {
-        console.log("testchangeplayer");
-        console.log("e.target " + index);
         populateDropdown(index);
         modal.style.display = "block";
         modalPlayerSelect.style.display = "block";
@@ -252,9 +283,6 @@ document.getElementById("playerSelect").addEventListener("change", (e) => {
     }
 
     if (currentPlayerIndex !== null) {
-        console.log(newName);
-        console.log(currentPlayerIndex);
-        console.log(players[currentPlayerIndex]);
         players[currentPlayerIndex].name = newName;
         renderPlayers();
         modal.style.display = "none";
@@ -303,13 +331,36 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
         console.log("TWOCMDBUTTON");
         const index = Number(toggle.dataset.index);
         players[index].twoCommanders = !players[index].twoCommanders;
+        //update cmdDMG to have two commanders
+
+        if (players[index].twoCommanders === true) {
+            console.log("check array cmd toggle");
+
+            for (let p = 0; p < players.length; p++) {
+
+                let value = players[p].cmdDMG[index];
+                // if it's NOT already an array convert it
+                if (!Array.isArray(value)) {
+                    players[p].cmdDMG[index] = [value, 0];
+                }
+            }
+        } else {
+            for (let p = 0; p < players.length; p++) {
+
+                let value = players[p].cmdDMG[index];
+                // if it's an array collapse it
+                if (Array.isArray(value)) {
+                    players[p].cmdDMG[index] = value[0];
+                }
+            }
+        }
 
         toggle.textContent = players[index].twoCommanders
             ? "2 Commanders: ON"
             : "2 Commanders: OFF";
 
         console.log("Two commanders: ", players[index].twoCommanders);
-
+        renderCommanderDamage();
         return;
     }
 
@@ -318,11 +369,9 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
 
     if (life) {
         const index = Number(life.dataset.index);
-        console.log(life.dataset.index);
-        console.log(Number(life.dataset.index));
         if (currentView < 0) {
             currentView = index;
-            console.log(currentView);
+            console.log("currentView " +currentView);
             console.log("preCMD");
             renderCommanderDamage(index);
         } else {
