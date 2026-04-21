@@ -144,7 +144,7 @@ function renderCommanderDamage() {
                     dmgDiv.className = "cmd-life";
                     dmgDiv.dataset.index = i;
                     dmgDiv.dataset.cmd = cmd; // record which commander
-                    dmgDiv.textContent = players[i].cmdDMG[cmd]?.[currentView] ?? 0;
+                    dmgDiv.textContent = players[i].cmdDMG[currentView]?.[cmd] ?? 0;
 
                     // PLUS
                     const plus = document.createElement("div");
@@ -177,6 +177,7 @@ function renderCommanderDamage() {
                 const dmgDiv = document.createElement("div");
                 dmgDiv.className = "cmd-life";
                 dmgDiv.dataset.index = i;
+                dmgDiv.dataset.cmd = 0; // record which commander
                 dmgDiv.textContent = players[i].cmdDMG[currentView]; //shows how much damage selected player hs done to each player(i)
 
                 center.appendChild(nameDiv);
@@ -302,23 +303,33 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
     //ZONE (+ / - buttons)
     const zone = e.target.closest(".zone");
     if (zone) {
-        
         const change = Number(zone.dataset.change);
+        const cmd = Number(zone.dataset.cmd);
+        const index = Number(zone.dataset.index);
+
         if (currentView < 0) {
             players[index].life += change;
             renderPlayers();
         } else {
-            if (players[index].cmdDMG[currentView]+(change)<0) {
-                return;
-            } else {
+            let value = players[index].cmdDMG[currentView];
 
-                
-                
-                players[index].life += change*(-1);
-                
+            if (Array.isArray(value)) {
+                // two commanders
+                if (value[cmd] + change < 0) return;
+
+                value[cmd] += change;
+
+            } else {
+                // single commander
+                if (value + change < 0) return;
+
                 players[index].cmdDMG[currentView] += change;
             }
-            renderCommanderDamage();
+
+            // life adjustment (this part you had correct idea-wise)
+            players[index].life -= change;
+
+            renderCommanderDamage(currentView);
         }
 
         return;
