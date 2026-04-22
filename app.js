@@ -40,9 +40,9 @@ const Storage = {
         return this.cache.players;
     },
 
-    setPlayers: (savedPlayers) => {
-        localStorage.setItem("savedPlayers", JSON.stringify(savedPlayers));
-        Storage.cache.players = savedPlayers; // keep cache in sync
+    setPlayers: (savedNames) => {
+        localStorage.setItem("savedPlayers", JSON.stringify(savedNames));
+        Storage.cache.players = savedNames; // keep cache in sync
     },
 
     addPlayers: (names) => {
@@ -77,7 +77,7 @@ function initPlayers(count) {
     Storage.load();
     gameHistory = Storage.getGames();
     savedPlayers = Storage.getPlayers();
-
+    console.log(savedPlayers);
     for (let i = 0; i < count; i++) {
         players.push({
             name: `Player ${i + 1}`,
@@ -428,6 +428,7 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
     })
 
     if (tempSavedPlayers.length > 0) {
+        console.log(tempSavedPlayers);
         Storage.addPlayers(tempSavedPlayers);
 
     }
