@@ -199,6 +199,23 @@ function renderCommanderDamage() {
     });
 }
 
+function winnerDropDown() {
+    const select = document.getElementById("winnerSelect");
+    select.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+    placeholder.textContent = "Who won?";
+    placeholder.value = "";
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    select.appendChild(placeholder);
+    players.forEach(player => {
+        const option = document.createElement("option");
+        option.value = player.name;
+        option.textContent = player.name;
+        select.appendChild(option);
+    });
+}
 //#####***EVENT_LISTENERS***#####
 
 // ***LIFE BTN*** CLICK EVENT LISTENER 
@@ -223,7 +240,10 @@ document.addEventListener("click", (e) => {
 menuBtn.addEventListener("click", () => {
     showModal("playerCount");
     if (startedGame) {
+        document.getElementById("finalTurnCount").innerText = document.getElementById("turnCountDisplay").innerText;
         showModal("playerCount", "endGameSave");
+        winnerDropDown();
+        
     }
 });
 
@@ -293,6 +313,15 @@ document.getElementById("playerSelect").addEventListener("change", (e) => {
         modalPlayerSelect.style.display = "none";
     }
     //modalPlayerSelect.style.display = "none";
+});
+
+// *** ***
+
+// *** winner select drop down***
+
+document.getElementById("winnerSelect").addEventListener("change", (e) => {
+    const selectedWinner = e.target.value;
+    console.log("Winner:", selectedWinner);
 });
 
 // *** ***
