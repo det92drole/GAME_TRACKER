@@ -225,7 +225,7 @@ function saveJSON(data) {
     gameHistory.push(data);
 }
 
-function downloadJSON(data, filename = "gameData.json") {
+function downloadJSON(data, filename = "MTGgameTRACKERdata.json") {
 
     const jsonString = JSON.stringify(data, null, 2); // pretty print
     const blob = new Blob([jsonString], { type: "application/json" });
