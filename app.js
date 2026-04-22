@@ -9,6 +9,36 @@ const saveGameMenu = document.getElementById("endGameSave");
 
 const turnTracker = document.getElementById("turnTracker");
 const turnTrackerCountDisplay = document.getElementById("turnCountDisplay");
+
+const Storage = {
+    getGames: () => JSON.parse(localStorage.getItem("games") || "[]"),
+
+    setGames: (games) => {
+        localStorage.setItem("games", JSON.stringify(games));
+    },
+
+    addGame: (game) => {
+        const games = Storage.getGames();
+        games.push(game);
+        Storage.setGames(games);
+    },
+
+    getPlayers: () => JSON.parse(localStorage.getItem("savedPlayers") || "[]"),
+
+    setPlayers: (savedPlayers) => {
+        localStorage.setItem("savedPlayers", JSON.stringify(savedPlayers));
+    },
+
+    addPlayers: (...args) => {
+        const savedPlayers = Storage.getGames();
+
+        args.forEach(arg => {
+            savedPlayers.push(arg);
+        });
+        Storage.setPlayers(savedPlayers);
+    }
+};
+
 let players = [];
 let savedPlayers = ["maynard", "leonard", "bernard", "richard"];
 let currentPlayerIndex = null; // for deck select drop down
@@ -17,6 +47,7 @@ let currentView = -1;
 let turnCountVal = 0;
 
 let gameHistory = [];
+let tempSavedPlayers = [];
 
 //FUNCTIONS
 function initPlayers(count) {
@@ -33,6 +64,9 @@ function initPlayers(count) {
             twoCommanders: false
         });
     }
+
+    gameHistory = Storage.getGames();
+    savedPlayers = Storage.getPlayers();
     renderPlayers();
 }
 function populateDropdown(playerIndex) {
@@ -364,6 +398,15 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
         date: new Date().toISOString()
     };
 
+    Storage.addGame(gameData);
+
+    tempSavedPlayers = [];
+    players.forEach(p=>{
+        if (!Storage.getPlayers.includes(p.name)) {
+            tempSavedPlayers.push(p.name);
+        }
+        Storage.addPlayers(tempSavedPlayers);
+    })
     saveJSON(gameData);
 });
 // *** ***
@@ -371,6 +414,7 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
 //*** DOWNLOAD FILE LISTENER***
 
 document.getElementById("downloadSaves").addEventListener("click", () => {
+    downloadJSON(gameHistory);
     loadJSON("data.json").then(data => {
         console.log(data);
     });
