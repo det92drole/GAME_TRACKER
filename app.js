@@ -11,10 +11,23 @@ const turnTracker = document.getElementById("turnTracker");
 const turnTrackerCountDisplay = document.getElementById("turnCountDisplay");
 
 const Storage = {
-    getGames: () => JSON.parse(localStorage.getItem("games") || "[]"),
+    cache: {
+        games: null,
+        players: null
+    },
+
+    load() {
+        this.cache.games = JSON.parse(localStorage.getItem("games") || "[]");
+        this.cache.players = JSON.parse(localStorage.getItem("savedPlayers") || "[]");
+    },
+
+    getGames() {
+        return this.cache.games;
+    },
 
     setGames: (games) => {
         localStorage.setItem("games", JSON.stringify(games));
+        Storage.cache.games = games;
     },
 
     addGame: (game) => {
@@ -23,19 +36,25 @@ const Storage = {
         Storage.setGames(games);
     },
 
-    getPlayers: () => JSON.parse(localStorage.getItem("savedPlayers") || "[]"),
+    getPlayers() {
+        return this.cache.players;
+    },
 
     setPlayers: (savedPlayers) => {
         localStorage.setItem("savedPlayers", JSON.stringify(savedPlayers));
+        Storage.cache.players = savedPlayers; // keep cache in sync
     },
 
-    addPlayers: (...args) => {
-        const savedPlayers = Storage.getPlayers();
+    addPlayers: (names) => {
+        const saved = Storage.getPlayers();
 
-        args.forEach(arg => {
-            savedPlayers.push(arg);
+        names.forEach(name => {
+            if (!saved.includes(name)) {
+                saved.push(name);
+            }
         });
-        Storage.setPlayers(savedPlayers);
+
+        Storage.setPlayers(saved);
     }
 };
 
@@ -47,7 +66,6 @@ let currentView = -1;
 let turnCountVal = 0;
 
 let gameHistory = [];
-let tempSavedPlayers = [];
 
 //FUNCTIONS
 function initPlayers(count) {
@@ -55,6 +73,10 @@ function initPlayers(count) {
     players = [];
     turnCountVal = 0;
     turnTrackerCountDisplay.textContent = turnCountVal;
+
+    Storage.load();
+    gameHistory = Storage.getGames();
+    savedPlayers = Storage.getPlayers();
 
     for (let i = 0; i < count; i++) {
         players.push({
@@ -64,9 +86,7 @@ function initPlayers(count) {
             twoCommanders: false
         });
     }
-
-    gameHistory = Storage.getGames();
-    savedPlayers = Storage.getPlayers();
+        
     renderPlayers();
 }
 function populateDropdown(playerIndex) {
@@ -400,13 +420,18 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
 
     Storage.addGame(gameData);
 
-    tempSavedPlayers = [];
+    let tempSavedPlayers = [];
     players.forEach(p=>{
-        if (!Storage.getPlayers.includes(p.name)) {
+        if (!Storage.getPlayers().includes(p.name)) {
             tempSavedPlayers.push(p.name);
         }
-        Storage.addPlayers(tempSavedPlayers);
     })
+
+    if (tempSavedPlayers.length > 0) {
+        Storage.addPlayers(tempSavedPlayers);
+
+    }
+
     saveJSON(gameData);
 });
 // *** ***
