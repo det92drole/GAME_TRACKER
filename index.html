@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local JSON Player Tracker</title>
     <style>
         /* Main layout */
@@ -95,6 +96,7 @@
             width: 300px;
             text-align: center;
         }
+
         .menu-container {
             position: fixed;
             inset: 0; /* fills entire screen */
@@ -126,6 +128,17 @@
             cursor: pointer;
             position: relative;
             z-index: 1;
+        }
+
+        /* MOBILE CSS */
+
+        button {
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            min-height: 44px;
+        }
+        body {
+            font-size: 18px;
         }
 
     </style>
