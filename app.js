@@ -30,7 +30,7 @@ const Storage = {
     },
 
     addPlayers: (...args) => {
-        const savedPlayers = Storage.getGames();
+        const savedPlayers = Storage.getPlayers();
 
         args.forEach(arg => {
             savedPlayers.push(arg);
