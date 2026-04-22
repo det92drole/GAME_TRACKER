@@ -383,9 +383,11 @@ document.getElementById("downloadSaves").addEventListener("click", () => {
 
 document.getElementById("loadSaves").addEventListener("click", () => {
     document.getElementById("fileInput").click();
+    console.log("load clicked");
 })
 
 document.getElementById("fileInput").addEventListener("change", (e) => {
+    console.log("running input load");
     const file = e.target.files[0];
     if (!file) return;
 
