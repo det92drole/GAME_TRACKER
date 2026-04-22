@@ -382,8 +382,9 @@ document.getElementById("downloadSaves").addEventListener("click", () => {
 //*** LOAD JSON FILE ***
 
 document.getElementById("loadSaves").addEventListener("click", () => {
-    document.getElementById("fileInput").click();
     console.log("load clicked");
+
+    document.getElementById("fileInput").click();
 })
 
 document.getElementById("fileInput").addEventListener("change", (e) => {
