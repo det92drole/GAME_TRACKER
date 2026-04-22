@@ -131,15 +131,66 @@
         }
 
         /* MOBILE CSS */
+        @media (max-width: 600px) {
 
-        button {
-            font-size: 1rem;
-            padding: 0.75rem 1rem;
-            min-height: 44px;
+            /* keep 2x2 grid */
+            #playerGrid {
+                height: 100vh; /* make sure it fills screen */
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+            }
+
+            /* make each quadrant behave like a touch panel */
+            .quadrant {
+                padding: 10px;
+                gap: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 4px;
+                border-radius: 12px;
+            }
+
+            /* BIG life total (this is your focal point) */
+            .lifeTotal {
+                font-size: 4rem;
+            }
+
+            /* bigger buttons for touch */
+            .lifeBtn {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+
+            /* prevent cramped layout inside each quadrant */
+            .lifeRow {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            /* turn tracker readability */
+            #turnCount {
+                font-size: 2rem;
+            }
+
+            /* optional: reduce middle bar clutter */
+            #middleBar {
+                padding: 6px;
+            }
+
+            button {
+                font-size: 1rem;
+                padding: 0.75rem 1rem;
+                min-height: 44px;
+            }
+
+            body {
+                font-size: 18px;
+            }
         }
-        body {
-            font-size: 18px;
-        }
+        
 
     </style>
 </head>
