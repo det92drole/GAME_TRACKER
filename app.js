@@ -238,6 +238,10 @@ function downloadJSON(data, filename = "gameData.json") {
     link.click();
     document.body.removeChild(link);
 }
+function loadGameData(data) {
+    // plug into your existing player / grid system
+    gameHistory = data;
+}
 
 //#####***EVENT_LISTENERS***#####
 
@@ -367,11 +371,45 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
 //*** DOWNLOAD FILE LISTENER***
 
 document.getElementById("downloadSaves").addEventListener("click", () => {
-    downloadJSON(gameHistory);
+    loadJSON("data.json").then(data => {
+        console.log(data);
+    });
 })
 
 //*** ***
 
+
+//*** LOAD JSON FILE ***
+
+document.getElementById("loadSaves").addEventListener("click", () => {
+    document.getElementById("fileInput").click();
+})
+
+document.getElementById("fileInput").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+        try {
+            const data = JSON.parse(event.target.result);
+            console.log("Loaded JSON:", data);
+
+            // call your function to populate UI here
+            loadGameData(data);
+            alert("loaded file");
+
+        } catch (err) {
+            alert("Invalid JSON file");
+            console.error("Invalid JSON file", err);
+        }
+    };
+
+    reader.readAsText(file);
+});
+
+//*** ***
 // *** COMMANDER DMG LISTENER ***
 
 document.getElementById("playerGrid").addEventListener("click", (e) => {
