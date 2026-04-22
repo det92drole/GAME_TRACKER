@@ -441,9 +441,7 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
 
 document.getElementById("downloadSaves").addEventListener("click", () => {
     downloadJSON(gameHistory);
-    loadJSON("data.json").then(data => {
-        console.log(data);
-    });
+    
 })
 
 //*** ***
