@@ -16,10 +16,14 @@ let startedGame = false;
 let currentView = -1;
 let turnCountVal = 0;
 
+let gameHistory = [];
+
 //FUNCTIONS
 function initPlayers(count) {
     startedGame = true;
     players = [];
+    turnCountVal = 0;
+    turnTrackerCountDisplay.textContent = turnCountVal;
 
     for (let i = 0; i < count; i++) {
         players.push({
@@ -216,6 +220,25 @@ function winnerDropDown() {
         select.appendChild(option);
     });
 }
+
+function saveJSON(data) {
+    gameHistory.push(data);
+}
+
+function downloadJSON(data, filename = "gameData.json") {
+
+    const jsonString = JSON.stringify(data, null, 2); // pretty print
+    const blob = new Blob([jsonString], { type: "application/json" });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 //#####***EVENT_LISTENERS***#####
 
 // ***LIFE BTN*** CLICK EVENT LISTENER 
@@ -240,7 +263,7 @@ document.addEventListener("click", (e) => {
 menuBtn.addEventListener("click", () => {
     showModal("playerCount");
     if (startedGame) {
-        document.getElementById("finalTurnCount").innerText = document.getElementById("turnCountDisplay").innerText;
+        document.getElementById("finalTurnCount").innerText = turnCountVal;
         showModal("playerCount", "endGameSave");
         winnerDropDown();
         
@@ -325,6 +348,29 @@ document.getElementById("winnerSelect").addEventListener("change", (e) => {
 });
 
 // *** ***
+
+// *** SAVE BUTTON LISTENER ***
+document.getElementById("submitGameBtn").addEventListener("click", () => {
+    const winner = document.getElementById("winnerSelect").value;
+
+    const gameData = {
+        players: players.map(p => p.name),
+        winner: winner,
+        turnCount: document.getElementById("finalTurnCount").textContent,
+        date: new Date().toISOString()
+    };
+
+    saveJSON(gameData);
+});
+// *** ***
+
+//*** DOWNLOAD FILE LISTENER***
+
+document.getElementById("downloadSaves").addEventListener("click", () => {
+    downloadJSON(gameHistory);
+})
+
+//*** ***
 
 // *** COMMANDER DMG LISTENER ***
 
@@ -418,7 +464,6 @@ document.getElementById("playerGrid").addEventListener("click", (e) => {
 //*** TURN TRACKER LISTENER ***
 
 turnTracker.addEventListener("click", (e) => {
-
     if (e.target.closest("#turnPlus")) {
         turnCountVal += 1;
         turnTrackerCountDisplay.textContent = turnCountVal;
