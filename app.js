@@ -77,7 +77,7 @@ function initPlayers(count) {
     Storage.load();
     gameHistory = Storage.getGames();
     savedPlayers = Storage.getPlayers();
-    console.log(savedPlayers);
+    console.log("saved players: "+ savedPlayers);
     for (let i = 0; i < count; i++) {
         players.push({
             name: `Player ${i + 1}`,
