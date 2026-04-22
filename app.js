@@ -5,6 +5,7 @@ const closeMenuBtn = document.getElementById("closeModalBtn");
 const modalPlayerCountSelect = document.getElementById("playerCount"); //player count select modal
 const menuBtn = document.getElementById("menuBtn");
 const modalPlayerSelect = document.getElementById("playerAndDeckSelect"); //player and deck select on modal
+const saveGameMenu = document.getElementById("endGameSave");
 
 const turnTracker = document.getElementById("turnTracker");
 const turnTrackerCountDisplay = document.getElementById("turnCountDisplay");
@@ -75,17 +76,17 @@ function renderPlayers() {
     });
 }
 
-function showModal(screen) {
+function showModal(...args) {
     modal.style.display = "block";
 
     document.querySelectorAll(".menu-modal").forEach(el => {
         el.style.display = "none";
     });
     
-    if (startedGame) {
-        document.getElementById("endGameSave").style.display = "block";
-    }
-    document.getElementById(screen).style.display = "block";
+    args.forEach(arg => {
+        document.getElementById(arg).style.display = "block";
+
+    })
 }
 
 function renderCommanderDamage() {
@@ -221,11 +222,17 @@ document.addEventListener("click", (e) => {
 
 menuBtn.addEventListener("click", () => {
     showModal("playerCount");
+    if (startedGame) {
+        showModal("playerCount", "endGameSave");
+    }
 });
 
 closeMenuBtn.addEventListener("click", () => {
+
     modal.style.display = "none";
     modalPlayerCountSelect.style.display = "none";
+    modalPlayerSelect.style.display = "none";
+    saveGameMenu.style.display = "none";
 });
 
 // Close if user clicks outside modal content
@@ -233,6 +240,9 @@ window.addEventListener("click", (event) => {
     if (event.target === modal) {
         modal.style.display = "none";
         modalPlayerCountSelect.style.display = "none";
+        modalPlayerSelect.style.display = "none";
+        saveGameMenu.style.display = "none";
+
     }
 });
 
@@ -254,8 +264,7 @@ document.getElementById("gameContainer").addEventListener("click", (e) => {
 
     if (e.target.classList.contains("playerName")) {
         populateDropdown(index);
-        modal.style.display = "block";
-        modalPlayerSelect.style.display = "block";
+        showModal("playerAndDeckSelect")
     }
 });
 
