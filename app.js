@@ -31,9 +31,9 @@ const Storage = {
     },
 
     addGame: (game) => {
-        const games = Storage.getGames();
-        games.push(game);
-        Storage.setGames(games);
+        gameHistory = Storage.getGames();
+        gameHistory.push(game);
+        Storage.setGames(gameHistory);
     },
 
     getPlayers() {
@@ -275,10 +275,6 @@ function winnerDropDown() {
     });
 }
 
-function saveJSON(data) {
-    gameHistory.push(data);
-}
-
 function downloadJSON(data, filename = "MTGgameTRACKERdata.json") {
 
     const jsonString = JSON.stringify(data, null, 2); // pretty print
@@ -432,8 +428,6 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
         Storage.addPlayers(tempSavedPlayers);
 
     }
-
-    saveJSON(gameData);
 });
 // *** ***
 
