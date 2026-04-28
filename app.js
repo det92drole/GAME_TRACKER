@@ -215,7 +215,7 @@ function renderCommanderDamage() {
                     // MINUS
                     const minus = document.createElement("button");
                     minus.className = "zone minus CMD";
-                    pminuslus.dataset.index = i;
+                    minus.dataset.index = i;
                     minus.dataset.cmd = cmd;
                     minus.dataset.change = 1;
                     minus.textContent = "+";
