@@ -361,7 +361,7 @@ document.getElementById("gameContainer").addEventListener("click", (e) => {
 
     const index = quadrant.dataset.index;
 
-    if (e.target.classList.contains("playerName")) {
+    if (e.target.classList.contains("playerNameButton")) {
         populateDropdown(index);
         showModal("playerAndDeckSelect")
     }
