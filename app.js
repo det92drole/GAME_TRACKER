@@ -172,7 +172,7 @@ function renderCommanderDamage() {
             const dmgDiv = document.createElement("div");
             dmgDiv.className = "cmd-life";
             dmgDiv.dataset.index = i;
-            dmgDiv.textContent = "ATK4CMD"; //shows how much damage selected player hs done to each player(i)
+            dmgDiv.textContent = "ATKR"; //shows how much damage selected player hs done to each player(i)
 
             const twoCmdBtn = document.createElement("button");
             twoCmdBtn.className = "commanderToggle";
