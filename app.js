@@ -356,6 +356,7 @@ document.getElementById("numPlayer4").onclick = () => initPlayers(4);
 // ***PLAYER/DECK SELECT DROP DOWN*** LISTENER
 
 document.getElementById("gameContainer").addEventListener("click", (e) => {
+    console.log("button player select");
     const quadrant = e.target.closest(".quadrant");
     if (!quadrant) return; // clicked outside a player
 
