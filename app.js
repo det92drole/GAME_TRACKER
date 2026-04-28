@@ -121,7 +121,9 @@ function renderPlayers() {
         div.dataset.index = index;
 
         div.innerHTML = `
-            <div class="playerName">${player.name}</div>
+            <div class="playerName">
+                <button class="playerNameButton">${player.name}</button>
+            </div>
 
             <div class="lifeRow">
                 <button class="lifeBtn minus">-</button>
