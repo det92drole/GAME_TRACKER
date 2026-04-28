@@ -232,7 +232,6 @@ function renderCommanderDamage() {
                 const nameDiv = document.createElement("div");
                 nameDiv.className = "cmdrDMG";
                 nameDiv.dataset.index = i;
-
                 const dmgDiv = document.createElement("div");
                 dmgDiv.className = "cmd-life";
                 dmgDiv.dataset.index = i;
@@ -245,14 +244,12 @@ function renderCommanderDamage() {
                 const plus = document.createElement("button");
                 plus.className = "zone plus CMD";
                 plus.dataset.index = i;
-                plus.dataset.cmd = cmd;
                 plus.dataset.change = 1;
                 plus.textContent = "+";
                 // MINUS
                 const minus = document.createElement("button");
                 minus.className = "zone minus CMD";
                 minus.dataset.index = i;
-                minus.dataset.cmd = cmd;
                 minus.dataset.change = 1;
                 minus.textContent = "+";
 
