@@ -211,6 +211,15 @@ function renderCommanderDamage() {
                     plus.dataset.cmd = cmd;
                     plus.dataset.change = 1;
                     plus.textContent = "+";
+
+                    const plusBtn = document.createElement("button");
+                    plusBtn.className = "plus CMD";
+                    plusBtn.dataset.index = i;
+                    plusBtn.dataset.cmd = cmd;
+                    plusBtn.dataset.change = 1;
+                    plusBtn.textContent = "+";
+
+                    plus.appendChild(plusBtn);
                     // MINUS
                     const minus = document.createElement("div");
                     minus.className = "zone minus";
@@ -218,6 +227,14 @@ function renderCommanderDamage() {
                     minus.dataset.cmd = cmd;
                     minus.dataset.change = -1;
                     minus.textContent = "-";
+
+                    const minusBtn = document.createElement("button");
+                    minusBtn.className = "minus CMD";
+                    minusBtn.dataset.index = i;
+                    minusBtn.dataset.cmd = cmd;
+                    minusBtn.dataset.change = -1;
+                    minusBtn.textContent = "-";
+                    minus.appendChild(minusBtn);
 
                     row.append(plus, nameDiv, dmgDiv, minus);
 
@@ -483,7 +500,7 @@ document.getElementById("fileInput").addEventListener("change", (e) => {
 document.getElementById("playerGrid").addEventListener("click", (e) => {
 
     //ZONE (+ / - buttons)
-    const zone = e.target.closest(".zone");
+    const zone = e.target.closest(".CMD");
     if (zone) {
         const change = Number(zone.dataset.change);
         const cmd = Number(zone.dataset.cmd);
