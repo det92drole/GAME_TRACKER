@@ -205,36 +205,20 @@ function renderCommanderDamage() {
                     dmgDiv.textContent = players[i].cmdDMG[currentView]?.[cmd] ?? 0;
 
                     // PLUS
-                    const plus = document.createElement("div");
-                    plus.className = "zone plus";
+                    const plus = document.createElement("button");
+                    plus.className = "zone plus CMD";
                     plus.dataset.index = i;
                     plus.dataset.cmd = cmd;
                     plus.dataset.change = 1;
                     plus.textContent = "+";
 
-                    const plusBtn = document.createElement("button");
-                    plusBtn.className = "plus CMD";
-                    plusBtn.dataset.index = i;
-                    plusBtn.dataset.cmd = cmd;
-                    plusBtn.dataset.change = 1;
-                    plusBtn.textContent = "+";
-
-                    plus.appendChild(plusBtn);
                     // MINUS
-                    const minus = document.createElement("div");
-                    minus.className = "zone minus";
-                    minus.dataset.index = i;
+                    const minus = document.createElement("button");
+                    minus.className = "zone minus CMD";
+                    pminuslus.dataset.index = i;
                     minus.dataset.cmd = cmd;
-                    minus.dataset.change = -1;
-                    minus.textContent = "-";
-
-                    const minusBtn = document.createElement("button");
-                    minusBtn.className = "minus CMD";
-                    minusBtn.dataset.index = i;
-                    minusBtn.dataset.cmd = cmd;
-                    minusBtn.dataset.change = -1;
-                    minusBtn.textContent = "-";
-                    minus.appendChild(minusBtn);
+                    minus.dataset.change = 1;
+                    minus.textContent = "+";
 
                     row.append(plus, nameDiv, dmgDiv, minus);
 
@@ -500,7 +484,7 @@ document.getElementById("fileInput").addEventListener("change", (e) => {
 document.getElementById("playerGrid").addEventListener("click", (e) => {
 
     //ZONE (+ / - buttons)
-    const zone = e.target.closest(".CMD");
+    const zone = e.target.closest(".zone");
     if (zone) {
         const change = Number(zone.dataset.change);
         const cmd = Number(zone.dataset.cmd);
