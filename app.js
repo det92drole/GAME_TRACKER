@@ -206,7 +206,7 @@ function renderCommanderDamage() {
 
                     // PLUS
                     const plus = document.createElement("button");
-                    plus.className = "zone plus CMD";
+                    plus.className = "CMD zone plus";
                     plus.dataset.index = i;
                     plus.dataset.cmd = cmd;
                     plus.dataset.change = 1;
@@ -214,7 +214,7 @@ function renderCommanderDamage() {
 
                     // MINUS
                     const minus = document.createElement("button");
-                    minus.className = "zone minus CMD";
+                    minus.className = "CMD zone minus";
                     minus.dataset.index = i;
                     minus.dataset.cmd = cmd;
                     minus.dataset.change = 1;
@@ -242,13 +242,13 @@ function renderCommanderDamage() {
                 center.appendChild(dmgDiv);
                 // PLUS
                 const plus = document.createElement("button");
-                plus.className = "zone plus CMD";
+                plus.className = "CMD zone plus";
                 plus.dataset.index = i;
                 plus.dataset.change = 1;
                 plus.textContent = "+";
                 // MINUS
                 const minus = document.createElement("button");
-                minus.className = "zone minus CMD";
+                minus.className = "CMD zone minus";
                 minus.dataset.index = i;
                 minus.dataset.change = 1;
                 minus.textContent = "+";
