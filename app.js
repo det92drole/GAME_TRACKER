@@ -219,7 +219,6 @@ function renderCommanderDamage() {
                     minus.dataset.cmd = cmd;
                     minus.dataset.change = 1;
                     minus.textContent = "+";
-                    console.log("DEBUG BUTTON CMD");
 
                     row.append(plus, nameDiv, dmgDiv, minus);
 
@@ -243,17 +242,20 @@ function renderCommanderDamage() {
                 center.appendChild(nameDiv);
                 center.appendChild(dmgDiv);
                 // PLUS
-                const plus = document.createElement("div");
-                plus.className = "zone plus";
+                const plus = document.createElement("button");
+                plus.className = "zone plus CMD";
                 plus.dataset.index = i;
+                plus.dataset.cmd = cmd;
                 plus.dataset.change = 1;
                 plus.textContent = "+";
                 // MINUS
-                const minus = document.createElement("div");
-                minus.className = "zone minus";
+                const minus = document.createElement("button");
+                minus.className = "zone minus CMD";
                 minus.dataset.index = i;
-                minus.dataset.change = -1;
-                minus.textContent = "-";
+                minus.dataset.cmd = cmd;
+                minus.dataset.change = 1;
+                minus.textContent = "+";
+
                 quadrant.append(plus, center, minus);
             }
         } 
