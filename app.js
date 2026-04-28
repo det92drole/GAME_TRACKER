@@ -219,6 +219,7 @@ function renderCommanderDamage() {
                     minus.dataset.cmd = cmd;
                     minus.dataset.change = 1;
                     minus.textContent = "+";
+                    console.log("DEBUG BUTTON CMD");
 
                     row.append(plus, nameDiv, dmgDiv, minus);
 
