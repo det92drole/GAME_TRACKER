@@ -361,7 +361,6 @@ document.getElementById("numPlayer4").onclick = () => initPlayers(4);
 // ***PLAYER/DECK SELECT DROP DOWN*** LISTENER
 
 document.getElementById("gameContainer").addEventListener("click", (e) => {
-    console.log("button player select");
     const quadrant = e.target.closest(".quadrant");
     if (!quadrant) return; // clicked outside a player
 
@@ -424,18 +423,20 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
 
     Storage.addGame(gameData);
 
+    const existing = Storage.getPlayers();
     let tempSavedPlayers = [];
-    players.forEach(p=>{
-        if (!Storage.getPlayers().includes(p.name)) {
-            console.log("check temp player name storage")
+
+    players.forEach(p => {
+        console.log("checking:", p.name);
+
+        if (!existing.includes(p.name)) {
+            console.log("new player:", p.name);
             tempSavedPlayers.push(p.name);
         }
-    })
+    });
 
     if (tempSavedPlayers.length > 0) {
-        console.log(tempSavedPlayers);
         Storage.addPlayers(tempSavedPlayers);
-
     }
 });
 // *** ***
