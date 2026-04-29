@@ -75,6 +75,7 @@ function initPlayers(count) {
     turnTrackerCountDisplay.textContent = turnCountVal;
     console.log("saved players 1: " + savedPlayers);
     Storage.load();
+    console.log(Storage.getPlayers());
     gameHistory = Storage.getGames();
     savedPlayers = Storage.getPlayers();
     console.log("saved players 2: "+ savedPlayers);
