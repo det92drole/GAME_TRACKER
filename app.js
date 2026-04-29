@@ -188,23 +188,22 @@ function renderCommanderDamage() {
 
         } else {
             //rework 
-            if (players[currentView].twoCommanders===true) {
+            if (players[currentView].twoCommanders === true) {
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "cmd-wrapper"; // create collumns for each commander
+
                 for (let cmd = 0; cmd < 2; cmd++) {
 
-                    const row = document.createElement("div");
-                    row.className = "cmd-row";
+                    const col = document.createElement("div");
+                    col.className = "cmd-col";
 
                     const nameDiv = document.createElement("div");
                     nameDiv.className = "cmdrDMG";
                     nameDiv.dataset.index = i;
+                    nameDiv.textContent = `CMD ${cmd + 1}`;
 
-                    const dmgDiv = document.createElement("div");
-                    dmgDiv.className = "cmd-life";
-                    dmgDiv.dataset.index = i;
-                    dmgDiv.dataset.cmd = cmd; // record which commander
-                    dmgDiv.textContent = players[i].cmdDMG[currentView]?.[cmd] ?? 0;
-
-                    // PLUS
+                    //plus
                     const plus = document.createElement("button");
                     plus.className = "CMD zone plus";
                     plus.dataset.index = i;
@@ -212,7 +211,14 @@ function renderCommanderDamage() {
                     plus.dataset.change = 1;
                     plus.textContent = "+";
 
-                    // MINUS
+                    //damage display
+                    const dmgDiv = document.createElement("div");
+                    dmgDiv.className = "cmd-life";
+                    dmgDiv.dataset.index = i;
+                    dmgDiv.dataset.cmd = cmd;
+                    dmgDiv.textContent = players[i].cmdDMG[currentView]?.[cmd] ?? 0;
+
+                    //minus
                     const minus = document.createElement("button");
                     minus.className = "CMD zone minus";
                     minus.dataset.index = i;
@@ -220,14 +226,12 @@ function renderCommanderDamage() {
                     minus.dataset.change = -1;
                     minus.textContent = "-";
 
-                    row.append(plus, nameDiv, dmgDiv, minus);
-
-                    // Add to center
-                    center.appendChild(row);
-
-                    // Add center once per quadrant (not inside loop ideally)
-                    quadrant.appendChild(center);
+                    col.append(plus, nameDiv, dmgDiv, minus);
+                    wrapper.appendChild(col);
                 }
+
+                center.appendChild(wrapper);
+                quadrant.appendChild(center);
             } else {
                 const nameDiv = document.createElement("div");
                 nameDiv.className = "cmdrDMG";
