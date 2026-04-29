@@ -379,25 +379,20 @@ document.getElementById("playerSelect").addEventListener("change", (e) => {
 
     if (newName === "__custom__") {
         const name = prompt("Enter a new player name:");
+
         if (name && name.trim() !== "") {
             newName = name.trim();
         } else {
             newName = "-----";
         }
-        // Save it
-        if (!savedPlayers.includes(newName) && newName != "-----") {
+
+        savedPlayers = Storage.getPlayers(); // ensure fresh state
+
+        if (!savedPlayers.includes(newName) && newName !== "-----") {
             savedPlayers.push(newName);
+            Storage.setPlayers(savedPlayers); // persist immediately
         }
     }
-
-    if (currentPlayerIndex !== null) {
-        players[currentPlayerIndex].name = newName;
-        renderPlayers();
-        modal.style.display = "none";
-        modalPlayerCountSelect.style.display = "none";
-        modalPlayerSelect.style.display = "none";
-    }
-    //modalPlayerSelect.style.display = "none";
 });
 
 // *** ***
