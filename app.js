@@ -73,12 +73,9 @@ function initPlayers(count) {
     players = [];
     turnCountVal = 0;
     turnTrackerCountDisplay.textContent = turnCountVal;
-    console.log("saved players 1: " + savedPlayers);
     Storage.load();
-    console.log(Storage.getPlayers());
     gameHistory = Storage.getGames();
     savedPlayers = Storage.getPlayers();
-    console.log("saved players 2: "+ savedPlayers);
     for (let i = 0; i < count; i++) {
         players.push({
             name: `Player ${i + 1}`,
@@ -393,6 +390,15 @@ document.getElementById("playerSelect").addEventListener("change", (e) => {
             Storage.setPlayers(savedPlayers); // persist immediately
         }
     }
+
+    if (currentPlayerIndex !== null) {
+        players[currentPlayerIndex].name = newName;
+        renderPlayers();
+        modal.style.display = "none";
+        modalPlayerCountSelect.style.display = "none";
+        modalPlayerSelect.style.display = "none";
+    }
+
 });
 
 // *** ***
@@ -401,7 +407,6 @@ document.getElementById("playerSelect").addEventListener("change", (e) => {
 
 document.getElementById("winnerSelect").addEventListener("change", (e) => {
     const selectedWinner = e.target.value;
-    console.log("Winner:", selectedWinner);
 });
 
 // *** ***
@@ -423,10 +428,8 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
     let tempSavedPlayers = [];
 
     players.forEach(p => {
-        console.log("checking:", p.name);
 
         if (!existing.includes(p.name)) {
-            console.log("new player:", p.name);
             tempSavedPlayers.push(p.name);
         }
     });
@@ -450,13 +453,11 @@ document.getElementById("downloadSaves").addEventListener("click", () => {
 //*** LOAD JSON FILE ***
 
 document.getElementById("loadSaves").addEventListener("click", () => {
-    console.log("load clicked");
 
     document.getElementById("fileInput").click();
 })
 
 document.getElementById("fileInput").addEventListener("change", (e) => {
-    console.log("running input load");
     const file = e.target.files[0];
     if (!file) return;
 
@@ -465,7 +466,6 @@ document.getElementById("fileInput").addEventListener("change", (e) => {
     reader.onload = (event) => {
         try {
             const data = JSON.parse(event.target.result);
-            console.log("Loaded JSON:", data);
 
             // call your function to populate UI here
             loadGameData(data);
