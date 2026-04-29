@@ -73,11 +73,11 @@ function initPlayers(count) {
     players = [];
     turnCountVal = 0;
     turnTrackerCountDisplay.textContent = turnCountVal;
-
+    console.log("saved players 1: " + savedPlayers);
     Storage.load();
     gameHistory = Storage.getGames();
     savedPlayers = Storage.getPlayers();
-    console.log("saved players: "+ savedPlayers);
+    console.log("saved players 2: "+ savedPlayers);
     for (let i = 0; i < count; i++) {
         players.push({
             name: `Player ${i + 1}`,
