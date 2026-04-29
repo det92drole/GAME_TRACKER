@@ -217,8 +217,8 @@ function renderCommanderDamage() {
                     minus.className = "CMD zone minus";
                     minus.dataset.index = i;
                     minus.dataset.cmd = cmd;
-                    minus.dataset.change = 1;
-                    minus.textContent = "+";
+                    minus.dataset.change = -1;
+                    minus.textContent = "-";
 
                     row.append(plus, nameDiv, dmgDiv, minus);
 
@@ -250,8 +250,8 @@ function renderCommanderDamage() {
                 const minus = document.createElement("button");
                 minus.className = "CMD zone minus";
                 minus.dataset.index = i;
-                minus.dataset.change = 1;
-                minus.textContent = "+";
+                minus.dataset.change = -1;
+                minus.textContent = "-";
 
                 quadrant.append(plus, center, minus);
             }
