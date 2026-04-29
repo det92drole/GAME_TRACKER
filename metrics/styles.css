@@ -1,0 +1,26 @@
+.menu-bar {
+    position: fixed; /* stays at top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* left justified */
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #222;
+    border-bottom: 1px solid #444;
+    z-index: 1000;
+}
+
+.menu-bar button {
+    padding: 8px 14px;
+    background: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    }
+
+.menu-bar button:hover {
+    background: #666;
+}

@@ -427,6 +427,7 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
     let tempSavedPlayers = [];
     players.forEach(p=>{
         if (!Storage.getPlayers().includes(p.name)) {
+            console.log("check temp player name storage")
             tempSavedPlayers.push(p.name);
         }
     })
