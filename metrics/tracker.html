@@ -19,6 +19,12 @@
         <select id="playerSelect">
             <option value="" disabled="">Select a player</option>
         </select>
+
+        <div>VS</div>
+
+        <select id="oppSelect">
+            <option value="" disabled="">Select an opponent</option>
+        </select>
     </div>
 
     <div class="player-card">
@@ -28,11 +34,12 @@
             <div class="win-count" id="playerCardWinCount"></div>
         </div>
 
-        <div class="games-list">
+        <div class="games-list" id="games-list">
         </div>
 
     </div>
-    <script src="app.js?v=1"></script>
+
+    <script src="app.js?v=1" defer></script>
 
 </body>
 </html>

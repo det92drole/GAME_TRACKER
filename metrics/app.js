@@ -10,6 +10,7 @@ function playerSelectDropDown() {
     players.forEach(player => {
         const option = document.createElement("option");
         option.value = player;
+        console.log(option.value);
         option.textContent = player;
         playerSelectDropBtn.appendChild(option);
     });
@@ -81,10 +82,12 @@ loadFileInput.addEventListener("change", (e) => {
 playerSelectDropBtn.addEventListener("change", (e)=>{
     var select = e.target.value;
     const player = playerHistoryObject.find(p => p.name === select);
-    const cardDisplay = document.getElementsByClassName("game-list");
+    const cardDisplay = document.getElementById("games-list");
+
+    cardDisplay.innerHTML = "";
 
     document.getElementById("playerCardName").innerText = select;
-    document.getElementById("playerCardWinCount").innerText = player.gamesWon.length;
+    document.getElementById("playerCardWinCount").innerText = "games won: "+player.gamesWon.length;
 
     player.gamesWon.forEach((game, index) => {
         const div = document.createElement("div");
