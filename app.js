@@ -320,12 +320,14 @@ document.addEventListener("click", (e) => {
 // ***MENU BTN*** CLICK EVENT LISTENER
 
 menuBtn.addEventListener("click", () => {
-    showModal("playerCount");
     if (startedGame) {
         document.getElementById("finalTurnCount").innerText = turnCountVal;
         showModal("playerCount", "endGameSave");
         winnerDropDown();
-        
+
+    } else {
+        showModal("playerCount");
+
     }
 });
 
@@ -437,6 +439,21 @@ document.getElementById("submitGameBtn").addEventListener("click", () => {
     if (tempSavedPlayers.length > 0) {
         Storage.addPlayers(tempSavedPlayers);
     }
+
+    startedGame = false;
+
+    if (startedGame) {
+        document.getElementById("finalTurnCount").innerText = turnCountVal;
+        showModal("playerCount", "endGameSave");
+        winnerDropDown();
+
+    } else {
+        showModal("playerCount");
+
+    }
+    alert("saved game data");
+
+
 });
 // *** ***
 
