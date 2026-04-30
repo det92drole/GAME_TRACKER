@@ -1,6 +1,7 @@
 
 let gameData = [];
 let players = [];
+let playerHistoryObject = [];
 const loadBtn = document.getElementById("loadData");
 const loadFileInput = document.getElementById("fileInput");
 const playerSelectDropBtn = document.getElementById("playerSelect");
@@ -18,7 +19,24 @@ function loadGameData(data) {
     gameData = data;
 
     gameData.forEach(g => {
-        players.push(g.winner);
+        let tempHistoryObject = {
+            name: "name", winCount: 0, gamesWon: [] };
+
+
+        if (!playerHistoryObject.some(p => p.name === g.winner)) {
+            players.push(g.winner);
+            tempHistoryObject.name = g.winner;
+            tempHistoryObject.winCount += 1;
+            tempHistoryObject.gamesWon.push(g);
+
+            playerHistoryObject.push(tempHistoryObject); // add new player object
+        } else {
+
+            const player = playerHistoryObject.find(p => p.name === g.winner);
+
+            player.winCount += 1;
+            player.gamesWon.push(g);
+        }
     })
 
     playerSelectDropDown(); // add players to dropdown select after DATA has been loaded
@@ -61,5 +79,21 @@ loadFileInput.addEventListener("change", (e) => {
 // select player stats to view
 
 playerSelectDropBtn.addEventListener("change", (e)=>{
+    var select = e.target.value;
+    const player = playerHistoryObject.find(p => p.name === select);
+    const cardDisplay = document.getElementsByClassName("game-list");
+
+    document.getElementById("playerCardName").innerText = select;
+    document.getElementById("playerCardWinCount").innerText = player.gamesWon.length;
+
+    player.gamesWon.forEach((game, index) => {
+        const div = document.createElement("div");
+        div.className = "game-row";
+        div.dataset.index = index;
+
+        div.innerText = "won on turn: " + game.turnCount + " table: " + JSON.stringify(game.players) + " date: " + game.date;
+
+        cardDisplay.appendChild(div);
+    });
 
 })

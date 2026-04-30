@@ -416,43 +416,35 @@ document.getElementById("winnerSelect").addEventListener("change", (e) => {
 // *** SAVE BUTTON LISTENER ***
 document.getElementById("submitGameBtn").addEventListener("click", () => {
     const winner = document.getElementById("winnerSelect").value;
-
-    const gameData = {
-        players: players.map(p => p.name),
-        winner: winner,
-        turnCount: document.getElementById("finalTurnCount").textContent,
-        date: new Date().toISOString()
-    };
-
-    Storage.addGame(gameData);
-
-    const existing = Storage.getPlayers();
-    let tempSavedPlayers = [];
-
-    players.forEach(p => {
-
-        if (!existing.includes(p.name)) {
-            tempSavedPlayers.push(p.name);
-        }
-    });
-
-    if (tempSavedPlayers.length > 0) {
-        Storage.addPlayers(tempSavedPlayers);
-    }
-
-    startedGame = false;
-
-    if (startedGame) {
-        document.getElementById("finalTurnCount").innerText = turnCountVal;
-        showModal("playerCount", "endGameSave");
-        winnerDropDown();
-
+    if (!winner) {
+        alert("please select a player");
     } else {
+        const gameData = {
+            players: players.map(p => p.name),
+            winner: winner,
+            turnCount: document.getElementById("finalTurnCount").textContent,
+            date: new Date().toISOString()
+        };
+
+        Storage.addGame(gameData);
+
+        const existing = Storage.getPlayers();
+        let tempSavedPlayers = [];
+
+        players.forEach(p => {
+
+            if (!existing.includes(p.name)) {
+                tempSavedPlayers.push(p.name);
+            }
+        });
+
+        if (tempSavedPlayers.length > 0) {
+            Storage.addPlayers(tempSavedPlayers);
+        }
+        startedGame = false;
         showModal("playerCount");
-
+        alert("saved game data");
     }
-    alert("saved game data");
-
 
 });
 // *** ***

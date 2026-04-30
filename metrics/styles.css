@@ -24,3 +24,44 @@
 .menu-bar button:hover {
     background: #666;
 }
+.player-card {
+    width: 100%;
+    max-width: 500px;
+    border: 2px solid #444;
+    background: #1f1f1f;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom: 2px solid #444;
+}
+
+.player-name {
+    text-align: left;
+}
+
+.win-count {
+    text-align: right;
+}
+
+.games-list {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.game-row {
+    padding: 10px 12px;
+    border-bottom: 1px solid #333;
+    font-size: 1rem;
+}
+
+.game-row:last-child {
+    border-bottom: none;
+}
