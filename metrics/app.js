@@ -6,6 +6,8 @@ const loadBtn = document.getElementById("loadData");
 const loadFileInput = document.getElementById("fileInput");
 const playerSelectDropBtn = document.getElementById("playerSelect");
 const oppSelectDropBtn = document.getElementById("oppSelect");
+const cardDisplay = document.getElementById("games-list");
+const home = document.getElementById("home");
 
 function playerSelectDropDown() {
     players.forEach(player => {
@@ -94,7 +96,6 @@ loadFileInput.addEventListener("change", (e) => {
 playerSelectDropBtn.addEventListener("change", (e)=>{
     var select = e.target.value;
     const player = playerHistoryObject.find(p => p.name === select);
-    const cardDisplay = document.getElementById("games-list");
 
     cardDisplay.innerHTML = "";
 
@@ -110,12 +111,28 @@ playerSelectDropBtn.addEventListener("change", (e)=>{
 
         cardDisplay.appendChild(div);
     });
-
+    
 })
 
 oppSelectDropBtn.addEventListener("change", (e) => {
     var select = e.target.value;
     const opp = playerHistoryObject.find(o => o.name === select);
+    const player = playerHistoryObject.find(p => p.name === playerSelectDropBtn.value);
+    let vsOppCount=0;
+    player.gamesWon.forEach(game => {
+        if (game.players.includes(select)) {
+            vsOppCount++;
+        }
+    });
+    const div = document.createElement("div");
+    div.className = "game-row";
 
+    div.innerText = player.name +" beat " + select + "  " + vsOppCount+ " times.";
 
+    cardDisplay.prepend(div);
 })
+
+home.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = "../";
+});
