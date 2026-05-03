@@ -358,6 +358,15 @@ document.getElementById("numPlayer4").onclick = () => initPlayers(4);
 
 // *** ***
 
+//tracker link redirect listener
+
+document.getElementById("metrics").addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = "./metrics/tracker.html";
+});
+
+// *** ***
+
 // ***PLAYER/DECK SELECT DROP DOWN*** LISTENER
 
 document.getElementById("gameContainer").addEventListener("click", (e) => {
