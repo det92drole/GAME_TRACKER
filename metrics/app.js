@@ -5,16 +5,27 @@ let playerHistoryObject = [];
 const loadBtn = document.getElementById("loadData");
 const loadFileInput = document.getElementById("fileInput");
 const playerSelectDropBtn = document.getElementById("playerSelect");
+const oppSelectDropBtn = document.getElementById("oppSelect");
 
 function playerSelectDropDown() {
     players.forEach(player => {
         const option = document.createElement("option");
         option.value = player;
-        console.log(option.value);
+        //console.log(option.value);
         option.textContent = player;
         playerSelectDropBtn.appendChild(option);
     });
 }
+function oppSelectDropDown() {
+    players.forEach(player => {
+        const option = document.createElement("option");
+        option.value = player;
+        //console.log(option.value);
+        option.textContent = player;
+        oppSelectDropBtn.appendChild(option);
+    });
+}
+
 function loadGameData(data) {
     // plug into your existing player / grid system
     gameData = data;
@@ -41,6 +52,7 @@ function loadGameData(data) {
     })
 
     playerSelectDropDown(); // add players to dropdown select after DATA has been loaded
+    oppSelectDropDown();
 }
 
 
@@ -98,5 +110,12 @@ playerSelectDropBtn.addEventListener("change", (e)=>{
 
         cardDisplay.appendChild(div);
     });
+
+})
+
+oppSelectDropBtn.addEventListener("change", (e) => {
+    var select = e.target.value;
+    const opp = playerHistoryObject.find(o => o.name === select);
+
 
 })
