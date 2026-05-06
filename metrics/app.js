@@ -57,6 +57,9 @@ function loadGameData(data) {
     oppSelectDropDown();
 }
 
+window.addEventListener("load", () => {
+    alert("import game data via .JSON file");
+});
 
 
 //load from saved file
