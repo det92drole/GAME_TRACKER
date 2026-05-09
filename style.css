@@ -229,5 +229,11 @@
         border: 2px solid red;
         font-size: 1.1rem;
         padding: 16px;
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        pointer-events: none;
     }
 }
