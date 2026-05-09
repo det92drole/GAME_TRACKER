@@ -76,6 +76,7 @@ function initPlayers(count) {
     Storage.load();
     gameHistory = Storage.getGames();
     savedPlayers = Storage.getPlayers();
+    savedPlayers.sort();// alphabetize saved players
     for (let i = 0; i < count; i++) {
         players.push({
             name: `Player ${i + 1}`,

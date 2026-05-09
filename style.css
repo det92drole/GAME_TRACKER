@@ -82,12 +82,15 @@
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: black;
+    color: white;
+    border: 3px solid red;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
     margin: 10% auto;
     padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    text-align: center;
+    box-sizing: border-box;
 }
 
 .menu-container {
@@ -219,5 +222,12 @@
         font-size: 18px;
         background-color: #121212;
         color: #f5f5f5;
+    }
+
+    .modal-content {
+        width: 95%;
+        border: 2px solid red;
+        font-size: 1.1rem;
+        padding: 16px;
     }
 }
