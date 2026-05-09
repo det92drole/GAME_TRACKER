@@ -232,6 +232,7 @@
         font-size: 28px;
         font-weight: bold;
         cursor: pointer;
+        z-index:9000;
     }
 
     .modal-content {
@@ -243,7 +244,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 1000;
+        z-index: 1;
         pointer-events: none;
     }
 }
