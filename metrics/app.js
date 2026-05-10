@@ -10,6 +10,7 @@ const cardDisplay = document.getElementById("games-list");
 const home = document.getElementById("home");
 
 function playerSelectDropDown() {
+    playerSelectDropBtn.innerHTML = "";
     players.forEach(player => {
         const option = document.createElement("option");
         option.value = player;
@@ -19,6 +20,7 @@ function playerSelectDropDown() {
     });
 }
 function oppSelectDropDown() {
+    oppSelectDropBtn.innerHTML = "";
     players.forEach(player => {
         const option = document.createElement("option");
         option.value = player;
@@ -30,6 +32,9 @@ function oppSelectDropDown() {
 
 function loadGameData(data) {
     // plug into your existing player / grid system
+    gameData = [];
+    players = [];
+    playerHistoryObject = [];
     gameData = data;
 
     gameData.forEach(g => {
@@ -52,6 +57,8 @@ function loadGameData(data) {
             player.gamesWon.push(g);
         }
     })
+
+    players.sort();// alphabetize saved players
 
     playerSelectDropDown(); // add players to dropdown select after DATA has been loaded
     oppSelectDropDown();
